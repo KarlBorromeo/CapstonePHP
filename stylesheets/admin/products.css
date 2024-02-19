@@ -1,0 +1,63 @@
+#products{
+    width: 100%;
+}
+#products table{
+    width: 100%;
+}
+#products tbody tr{
+    background-color: rgb(44,47,65);
+    margin-bottom: 1rem!important;
+    padding-bottom: 1rem;
+}
+#products p{
+    padding: 0;
+    margin: 0;
+}
+#products thead{
+    color: #656882;
+    font-size: small;
+    text-align: center;
+}
+#products thead th{
+    padding-bottom: 1rem;
+}
+#products tbody td{
+    text-align: center;
+    color: #7E808E;
+    min-width: 50px;
+    border-bottom: 1px solid #656882;
+    padding: .2rem;
+}
+#products tbody td img{
+    height: 5rem;
+}
+#products .highlight{
+    color: white;
+}
+#products .image{
+    text-align: start;
+}
+#products a{
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: .5rem;
+}
+#products button.edit{
+    border: none;
+    background-color: rgb(210,209,220);
+    color: #7971D9;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+}
+#products a.delete{
+    fill: #7E808E;
+}
+#products a.delete:hover path{
+    fill: red;
+}
+#edit-product form label{
+    padding-left: 2rem;
+    transform: translateY(-.5rem);
+    font-size: smaller!important;
+}
