@@ -1,0 +1,16 @@
+ul{
+    list-style: none;
+    margin-bottom: 0!important;
+}
+li{
+    display: inline-block;
+    margin-right: 1rem;
+    vertical-align: middle;
+}
+header{
+    position: sticky;
+    width: 100%;
+    top: 0;
+    background-color: white;
+    z-index: 1;
+}
