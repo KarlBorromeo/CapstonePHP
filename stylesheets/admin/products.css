@@ -56,8 +56,7 @@
 #products a.delete:hover path{
     fill: red;
 }
-#edit-product form label{
-    padding-left: 2rem;
-    transform: translateY(-.5rem);
-    font-size: smaller!important;
+#create-product form option{
+    transform: translateY(-1rem);
+    text-align: center;
 }

@@ -21,7 +21,7 @@
                         <input type="text" name="search" placeholder="Search Products" class="border">
                         <button type="submit"><img src="../../assets/images/search.svg"></button>                        
                     </div>
-                    <a href="#" class="btn btn-primary p-3"><img src="../../assets/images/cart.svg"> Cart(0)</a>
+                    <a href="/products/cart" class="btn btn-primary p-3"><img src="../../assets/images/cart.svg"> Cart(0)</a>
                 </form>
                 <div class="d-flex">           
                     <ol id="categories">
@@ -36,174 +36,80 @@
                     <ul id="products">
                         <h4>All Products(36)</h4>
                         <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
+                            <a href="/products/item">
+                                <img src="../../assets/images/food.png">
+                                <div>
+                                    <p>Vegetable<p>
+                                    <section>
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_empty.png">
+                                        <p>36 Rating</p>
+                                    </section>
+                                    <span class="text-primary fw-semibold">
+                                        $10
+                                    </span>
+                                </div>
+                            </a>
                         </li>
                         <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
+                            <a href="/products/item">
+                                <img src="../../assets/images/food.png">
+                                <div>
+                                    <p>Vegetable<p>
+                                    <section>
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_empty.png">
+                                        <p>36 Rating</p>
+                                    </section>
+                                    <span class="text-primary fw-semibold">
+                                        $10
+                                    </span>
+                                </div>
+                            </a>
                         </li>
                         <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
+                            <a href="/products/item">
+                                <img src="../../assets/images/food.png">
+                                <div>
+                                    <p>Vegetable<p>
+                                    <section>
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_empty.png">
+                                        <p>36 Rating</p>
+                                    </section>
+                                    <span class="text-primary fw-semibold">
+                                        $10
+                                    </span>
+                                </div>
+                            </a>
                         </li>
                         <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="../../assets/images/food.png">
-                            <div>
-                                <p>Vegetable<p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                    $10
-                                </span>
-                            </div>
+                            <a href="/products/item">
+                                <img src="../../assets/images/food.png">
+                                <div>
+                                    <p>Vegetable<p>
+                                    <section>
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_shade.png">
+                                        <img src="../../assets/images/star_empty.png">
+                                        <p>36 Rating</p>
+                                    </section>
+                                    <span class="text-primary fw-semibold">
+                                        $10
+                                    </span>
+                                </div>
+                            </a>
                         </li>
                     </ul>
                 </div>    

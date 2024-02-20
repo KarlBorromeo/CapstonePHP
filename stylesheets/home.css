@@ -5,11 +5,13 @@ main{
     background-color: rgb(243,248,253);
     padding: 3rem;
     min-height: 110vh;
+    z-index: 1;
 }
 #search-form{
     position: sticky;
     top: 5px;
     z-index: 2;
+    display: inline-block;
 }
 #search-form > div{
     position: relative;
@@ -70,6 +72,10 @@ main{
 #products{
     width: 100%;
     padding: 1rem;
+}
+#products a{
+    text-decoration: none!important;
+    color: black;
 }
 #products div{
     padding: 1rem;

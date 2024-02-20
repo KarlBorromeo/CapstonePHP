@@ -16,8 +16,8 @@
             <a href="#"><img src="../../../../assets/images/organic_shop_logo_large.svg"></a>
         </div>
         <ul>
-            <li><a href="#" class="d-flex align-items-center gap-2 fw-semibold"><img src="../../../../assets/images/product_figma.svg">Orders</a></li>
-            <li><a href="#" class="d-flex align-items-center gap-2 fw-semibold"><img src="../../../../assets/images/product_figma.svg">Products</a></li>
+            <li><a href="/admin" class="d-flex align-items-center gap-2 fw-semibold"><img src="../../../../assets/images/product_figma.svg">Orders</a></li>
+            <li><a href="/admin/products" class="d-flex align-items-center gap-2 fw-semibold"><img src="../../../../assets/images/product_figma.svg">Products</a></li>
         </ul>
     </aside>
 </html>

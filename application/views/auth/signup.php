@@ -12,12 +12,13 @@
 		<link rel="stylesheet" href="../../stylesheets/auth/auth.css">
 	</head>
 	<body id="auth-container" class="border">
-		<form action="" method="POST" id="signup-form">
+		<form action="/auth/signup" method="POST" id="signup-form">
+			<?= $this->session->flashdata('error'); ?>
 			<div class="border p-5 border-top-0 border-start-0 border-end-0">
 				<img src="../../assets/images/organic_shop_logo.svg" class="mb-3">
 				<div class="d-flex justify-content-between gap-5" class="mb-3">
 					<p>Signup to order.</p>
-					<a href="/">Already a member? Login here.</a>
+					<a href="/auth/">Already a member? Login here.</a>
 				</div>
                 <div class="row mb-3">
                     <div class="form-floating col-6 p-1">
@@ -34,11 +35,11 @@
 					<label for="email-signup">Email</label>
 				</div>
 				<div class="form-floating mb-3 row p-1">
-					<input type="password" name="password" id="password-signup" class="form-control" placeholder=""></textarea>
+					<input value="123123123" type="password" name="password" id="password-signup" class="form-control" placeholder=""></textarea>
 					<label for="password-signup">Password</label>
 				</div>
 				<div class="form-floating mb-3 row p-1">
-					<input type="password" name="confirm-password" id="confirm-password-signup" class="form-control" placeholder=""></textarea>
+					<input value="123123123" type="password" name="confirm-password" id="confirm-password-signup" class="form-control" placeholder=""></textarea>
 					<label for="confirm-password-signup">Confirm Password</label>
 				</div>
 			</div>

@@ -18,7 +18,7 @@
         </div>
         <div class="d-flex align-items-center gap-3">
             <a href="#" class="btn btn-outline-primary" id="switch">Switch to Shop View</a>
-            <a href="#"><img id="profile" src="../../../../assets/images/profile.png"><img id="caret" src="../../../../assets/images/carret.svg"></a>
+            <a href="/auth/logout"><img id="profile" src="../../../../assets/images/profile.png"><img id="caret" src="../../../../assets/images/carret.svg"></a>
         </div>
     </header>
 </html>

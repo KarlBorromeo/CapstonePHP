@@ -11,6 +11,18 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../../stylesheets/admin/orders.css">
         <link rel="stylesheet" href="../../stylesheets/admin/products.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#create-product').submit(function(){
+                    $.post($(this).attr('action'),$(this).serialize(),function(res){
+                        // console.log('submitted');
+                        // console.log(res);
+                    })
+                    // return false;
+                })
+            })
+        </script>
     </head>
     <body class="d-flex">
         <?php $this->load->view('admin/widgets/aside.php') ?>
@@ -19,8 +31,11 @@
             <h2>Products</h2>
             <main>
                 <form action="#" method="POST" class="mb-3">
-                    <input type="text" name="search" placeholder="Search Products">
-                    <button type="submit"><img src="../../../assets/images/search.svg"></button>
+                    <div>
+                        <input type="text" name="search" placeholder="Search Products">
+                        <button type="submit"><img src="../../../assets/images/search.svg"></button>                        
+                    </div>
+                    <a data-bs-toggle="modal" data-bs-target="#create-product" class="btn btn-primary p-2"><img src="../../assets/images/plus.svg"> Add Product</a>
                 </form>
                 <div class="d-flex gap-4">
                     <ul id="categories">
@@ -112,45 +127,49 @@
             </main>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="edit-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Create Product Modal -->
+        <div class="modal fade" id="create-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit a Product</h1>
-                    </div>
-                    <form class="modal-body">
-                        <div class="form-floating mb-2">
-                            <input type="text" class="form-control" placeholder="" id="productID" name="product_id">
-                            <label for="productID">Product ID</label>
-                        </div>
-                        <div class="form-floating mb-2">
+                    <h1 class="modal-title fs-5 text-center mt-3" id="exampleModalLabel">Add a Product</h1>
+                    <form class="modal-body" action="/admin/add_product" method="POST" enctype="multipart/form-data">
+                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="" id="name" name="product_name">
                             <label for="name">Name</label>
                         </div>
-                        <div class="form-floating mb-2">
+                        <div class="form-floating mb-3">
                             <textarea class="form-control" placeholder="" id="description" name="description"></textarea>
                             <label for="description">Description</label>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row mb-3">
                             <div class="form-floating col-6">
-                                <input type="text" class="form-control" placeholder="" id="category" name="category">
-                                <label for="category">Category</label>
+                                <select class="form-select" aria-label="Default select example" id="category" name="category">
+                                    <option selected>Vegetable</option>
+                                    <option value="1">Fruits</option>
+                                    <option value="2">Meat</option>
+                                    <option value="3">Dairy</option>
+                                    <option value="3">Grains</option>
+                                </select>
+                                <label for="category" class="ms-2">Category</label>
+                            </div>                       
+                            <div class="form-floating col-3">
+                                <input type="text" class="form-control" placeholder="" id="price" name="price" value="1">
+                                <label for="price" class="ms-2">Price</label>
                             </div>
                             <div class="form-floating col-3">
-                                <input type="text" class="form-control" placeholder="" id="price" name="price">
-                                <label for="price">Price</label>
-                            </div>
-                            <div class="form-floating col-3">
-                                <input type="number" class="form-control" placeholder="" id="stocks" name="stocks">
-                                <label for="stocks">Stocks</label>
+                                <input type="number" class="form-control" placeholder="" id="stocks" name="stocks" value="1" min="1">
+                                <label for="stocks" class="ms-2">Stocks</label>
                             </div>
                         </div>
+                        <div class="mb-3">
+                        <?php echo form_open_multipart('upload/do_upload');?>
+                            <input class="form-control" type="file" id="formFileMultiple" name="images">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
                     </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Save</button>
-                    </div>
                 </div>
             </div>
         </div>

@@ -22,7 +22,7 @@
                         <input type="text" name="search" placeholder="Search Products" class="border">
                         <button type="submit"><img src="../../assets/images/search.svg"></button>                        
                     </div>
-                    <a href="#" class="btn btn-primary p-3"><img src="../../assets/images/cart.svg"> Cart(0)</a>
+                    <a href="/products/cart" class="btn btn-primary p-3"><img src="../../assets/images/cart.svg"> Cart(0)</a>
                 </form>
                 <a href="#" class="d-flex align-items-center gap-3 mb-4 fw-semibold"><img src="../../../assets/images/left.svg"> Go Back</a>
                 <div class="d-flex bg-white">

@@ -17,8 +17,19 @@
             <li>Let's order fresh items for you</li>
         </ul>
         <ul>
-            <li><a href="#" class="btn btn-outline-primary">Signup</a></li>
-            <li><a href="#" class="btn btn-primary">Login</a></li>
+<?php
+    if($this->session->userdata('user')){
+?>
+            <li><a href="/auth/logout" class="btn btn-primary">Logout</a></li>
+<?php
+    }else{
+?>
+            <li><a href="/auth/render_signup" class="btn btn-outline-primary">Signup</a></li>
+            <li><a href="/auth" class="btn btn-primary">Login</a></li>            
+<?php        
+    }
+?>
+
         </ul>
     </header>
 </html>

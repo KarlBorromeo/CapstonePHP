@@ -26,3 +26,12 @@ form + img{
 #signup-form + img{
     height: 42rem;
 }
+.error{
+    color: red;
+    font-weight: 600;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    top: 2rem;
+}
