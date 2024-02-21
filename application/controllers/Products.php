@@ -9,7 +9,7 @@ class Products extends CI_Controller{
         $this->load->view('item/item');
     }
     public function cart(){
-        $this->load->view('admin/products');
+        $this->load->view('cart/cart');
     }
 }
 ?>

@@ -8,7 +8,7 @@ class AdminModel extends CI_Model{
         $this->uploaded_image_paths  = [];
     }
     /* return the path of uplaoded images */
-    private function move_images()
+    public function move_images()
     {
         $image_path = array();
         $config['upload_path']          = 'C:/wamp64/www/Capstone/assets/uploads/';
@@ -47,10 +47,6 @@ class AdminModel extends CI_Model{
         $this->form_validation->set_rules('price','Price', 'required|numeric');
         $this->form_validation->set_rules('stocks','Stocks', 'required|numeric');
         if($this->form_validation->run()){
-            $error = $this->move_images();
-            if($error){
-                return $error;
-            }
             return null;
         }else{
             return validation_errors('<p class="error">','</p>');
@@ -89,6 +85,21 @@ class AdminModel extends CI_Model{
     {
         $this->db->query('DELETE FROM images where products_id = ?', array($product_id));
         $this->db->query('DELETE FROM products where id = ?', array($product_id)); 
+    }
+
+    /* save product updates */
+    public function save_product_update()
+    {
+        $this->db->query('UPDATE products 
+        SET name = ?, description = ?, category = ?, price = ?, stocks = ?
+        WHERE id = ?',
+        array($this->input->post('product_name'),
+            $this->input->post('description'),
+            $this->input->post('category'),
+            $this->input->post('price'),
+            $this->input->post('stocks'),
+            $this->input->post('product_id'),
+        ));
     }
 
 }

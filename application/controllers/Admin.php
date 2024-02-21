@@ -24,11 +24,18 @@ class Admin extends CI_Controller{
     public function add_product()
     {
         $errors = $this->adminmodel->validate();
+        var_dump($errors);
         if($errors){
             $this->session->set_flashdata('errors', $errors);
         }else{
-            $images = $this->adminmodel->image_path_getter();
-            $this->adminmodel->add_product($images);
+            $upload_error = $this->adminmodel->move_images();
+            var_dump($upload_error);
+            if($upload_error ){
+                $this->session->set_flashdata('errors', $upload_error );
+            }else{
+                $images = $this->adminmodel->image_path_getter();
+                $this->adminmodel->add_product($images);                
+            }
         }
         redirect('/admin/products');
     }
@@ -44,8 +51,19 @@ class Admin extends CI_Controller{
     public function fetch_one_product($product_id)
     {
         $product = $this->product->fetch_one_product($product_id);
-        var_dump($product);
+        $this->session->set_flashdata('edit_product', $product);
+        redirect('admin/products');
     }
 
+    /* update product details */
+    public function save_update()
+    {
+        $this->output->enable_profiler(TRUE);
+        $errors = $this->adminmodel->validate();
+        if(!$errors){
+            $this->adminmodel->save_product_update();
+        }
+        redirect('admin/products');
+    }
 }
 ?>

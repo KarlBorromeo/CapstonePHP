@@ -26,5 +26,6 @@ class Product extends CI_Model{
         $response['images'] = $this->fetch_product_images($product_id);
         return $response;
     }
+
 }
 ?>
