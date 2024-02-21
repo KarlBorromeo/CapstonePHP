@@ -5,7 +5,7 @@ class Auth extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('authcontroller');
+		$this->load->model('authmodel');
 	}
 	public function index()
 	{
@@ -20,9 +20,9 @@ class Auth extends CI_Controller {
 	/* singup user */
 	public function signup()
 	{
-		$errors = $this->authcontroller->validate();
+		$errors = $this->authmodel->validate();
 		if(!$errors){
-			if($this->authcontroller->create_account()){
+			if($this->authmodel->create_account()){
 				$this->login();
 			}else{
 				$this->session->set_flashdata('error', '<p class="error">Creating Account Failed</p>'); 
@@ -37,7 +37,7 @@ class Auth extends CI_Controller {
 	/* login user */
 	public function login()
 	{
-		$user = $this->authcontroller->login();
+		$user = $this->authmodel->login();
 		if($user){
 			$this->session->set_userdata(array('user'=>$user));
 			if($user['role'] == 'admin'){

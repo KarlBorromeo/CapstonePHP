@@ -31,3 +31,12 @@ header div #profile{
     background-color: white;
     text-decoration: underline;
 }
+.error{
+    color: red;
+    font-weight: 600;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    top: 1rem;
+}

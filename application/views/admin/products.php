@@ -75,51 +75,27 @@
                                 </tr>
                             </thead>
                             <tbody>
+<?php
+        foreach($products as $product){
+?>
                                 <tr>
-                                    <td class="image d-flex align-items-center gap-3 highlight"><img src="../../../assets/images/food.png">Vegetables</td>
-                                    <td>123</td>
-                                    <td class="highlight">$10</td>
-                                    <td>Vegetable</td>
-                                    <td>123</td>
-                                    <td>1000</td>
+                                    <td class="image d-flex align-items-center gap-3 highlight"><img src="../../../assets/uploads/<?= $product['images'][0]['file_name'] ?>"><?= $product['name'] ?></td>
+                                    <td><?= $product['id'] ?></td>
+                                    <td class="highlight"><?= $product['price'] ?></td>
+                                    <td><?= $product['category'] ?></td>
+                                    <td><?= $product['stocks'] ?></td>
+                                    <td>0</td>
                                     <td>
-                                        <!-- <a class="edit" href="#">Edit</a> -->
-                                        <button type="button" class="edit" data-bs-toggle="modal" data-bs-target="#edit-product">
-                                            Edit
-                                        </button>
-                                        <a href="#" class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cad"/></svg></a>
+                                        <a class="edit" href="/admin/fetch_one_product/<?= $product['id'] ?>">Edit</a>
+                                        <!-- <button type="button" class="edit" data-bs-toggle="modal" data-bs-target="#edit-product"> -->
+                                            <!-- Edit
+                                        </button> -->
+                                        <a href="/admin/delete_product/<?= $product['id'] ?>" class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cad"/></svg></a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="image d-flex align-items-center gap-3 highlight"><img src="../../../assets/images/food.png">Vegetables</td>
-                                    <td>123</td>
-                                    <td class="highlight">$10</td>
-                                    <td>Vegetable</td>
-                                    <td>123</td>
-                                    <td>1000</td>
-                                    <td>
-                                        <!-- <a class="edit" href="#">Edit</a> -->
-                                        <button type="button" class="edit" data-bs-toggle="modal" data-bs-target="#edit-product">
-                                            Edit
-                                        </button>
-                                        <a href="#" class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cad"/></svg></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="image d-flex align-items-center gap-3 highlight"><img src="../../../assets/images/food.png">Vegetables</td>
-                                    <td>123</td>
-                                    <td class="highlight">$10</td>
-                                    <td>Vegetable</td>
-                                    <td>123</td>
-                                    <td>1000</td>
-                                    <td>
-                                        <!-- <a class="edit" href="#">Edit</a> -->
-                                        <button type="button" class="edit" data-bs-toggle="modal" data-bs-target="#edit-product">
-                                            Edit
-                                        </button>
-                                        <a href="#" class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cad"/></svg></a>
-                                    </td>
-                                </tr>
+<?php
+        }
+?>
                             </tbody>
                         </table>                        
                     </section>
@@ -131,6 +107,7 @@
         <div class="modal fade" id="create-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
+                    <?= $this->session->flashdata('errors') ?>
                     <h1 class="modal-title fs-5 text-center mt-3" id="exampleModalLabel">Add a Product</h1>
                     <form class="modal-body" action="/admin/add_product" method="POST" enctype="multipart/form-data">
                         <div class="form-floating mb-3">
@@ -145,15 +122,15 @@
                             <div class="form-floating col-6">
                                 <select class="form-select" aria-label="Default select example" id="category" name="category">
                                     <option selected>Vegetable</option>
-                                    <option value="1">Fruits</option>
-                                    <option value="2">Meat</option>
-                                    <option value="3">Dairy</option>
-                                    <option value="3">Grains</option>
+                                    <option value="Fruits">Fruits</option>
+                                    <option value="Meat">Meat</option>
+                                    <option value="Dairy">Dairy</option>
+                                    <option value="Grains">Grains</option>
                                 </select>
                                 <label for="category" class="ms-2">Category</label>
                             </div>                       
                             <div class="form-floating col-3">
-                                <input type="text" class="form-control" placeholder="" id="price" name="price" value="1">
+                                <input type="number" class="form-control" placeholder="" id="price" name="price" value="1">
                                 <label for="price" class="ms-2">Price</label>
                             </div>
                             <div class="form-floating col-3">
@@ -162,12 +139,11 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                        <?php echo form_open_multipart('upload/do_upload');?>
-                            <input class="form-control" type="file" id="formFileMultiple" name="images">
+                            <input class="form-control" type="file" id="formFileMultiple" multiple name="images[]">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
                         </div>
                     </form>
                 </div>

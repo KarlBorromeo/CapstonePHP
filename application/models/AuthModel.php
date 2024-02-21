@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('direct acess not allowed');
 
-class AuthController extends CI_Model{
+class AuthModel extends CI_Model{
     /*VALIDATE the signup form return error if failed else null*/
     public function validate()
     {

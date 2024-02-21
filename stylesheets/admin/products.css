@@ -30,6 +30,9 @@
 }
 #products tbody td img{
     height: 5rem;
+    width: 5rem;
+    object-fit: contain;
+    object-position: center;
 }
 #products .highlight{
     color: white;
