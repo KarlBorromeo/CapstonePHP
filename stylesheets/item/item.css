@@ -70,8 +70,9 @@ main > a:hover{
 }
 #item-details label p{
     position: absolute;
-    top: -30%;
-    font-size: x-small;
+    top: -40%;
+    overflow: visible;
+    text-wrap: nowrap;
 }
 input:disabled{
     background-color: rgb(240,240,240);
@@ -85,4 +86,9 @@ input:disabled{
 }
 #products p{
     color: rgb(125,125,125);
+}
+
+#item-details form{
+    position: relative;
+    display: inline-block;
 }

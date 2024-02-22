@@ -13,12 +13,6 @@ class Product extends CI_Model{
         return $products;
     }
 
-    /* fetch the images of the product */
-    // private function fetch_product_images($product_id)
-    // {
-    //     return $this->db->query('SELECT * FROM images WHERE products_id = ?',array($product_id))->result_array();
-    // }
-
     /* fetch one product details */
     public function fetch_one_product($product_id)
     {

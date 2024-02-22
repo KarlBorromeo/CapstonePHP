@@ -34,8 +34,8 @@
                         <li class="text-center"><a href="#"><img src="../../assets/images/Grains.png">Grains</a></li>
                     </ol>
                     <ul id="products">
-                        <h4>All Products(36)</h4>
-                        <li>
+                        <h4>All Products(<?= count($products) ?>)</h4>
+                        <!-- <li>
                             <a href="/products/item">
                                 <img src="../../assets/images/food.png">
                                 <div>
@@ -53,12 +53,16 @@
                                     </span>
                                 </div>
                             </a>
-                        </li>
+                        </li> -->
+<?php
+    foreach($products as $product){
+        $main_index = $product['images']['main_img'];
+?>
                         <li>
-                            <a href="/products/item">
-                                <img src="../../assets/images/food.png">
+                            <a href="/products/item/<?= $product['id'] ?>">
+                                <img src="../../assets/uploads/<?= $product['images']['img'][$main_index] ?>">
                                 <div>
-                                    <p>Vegetable<p>
+                                    <p><?= $product['name'] ?><p>
                                     <section>
                                         <img src="../../assets/images/star_shade.png">
                                         <img src="../../assets/images/star_shade.png">
@@ -68,49 +72,14 @@
                                         <p>36 Rating</p>
                                     </section>
                                     <span class="text-primary fw-semibold">
-                                        $10
+                                    <?= $product['price'] ?>
                                     </span>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="/products/item">
-                                <img src="../../assets/images/food.png">
-                                <div>
-                                    <p>Vegetable<p>
-                                    <section>
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_empty.png">
-                                        <p>36 Rating</p>
-                                    </section>
-                                    <span class="text-primary fw-semibold">
-                                        $10
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/products/item">
-                                <img src="../../assets/images/food.png">
-                                <div>
-                                    <p>Vegetable<p>
-                                    <section>
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_shade.png">
-                                        <img src="../../assets/images/star_empty.png">
-                                        <p>36 Rating</p>
-                                    </section>
-                                    <span class="text-primary fw-semibold">
-                                        $10
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
+<?php
+    }
+?>
                     </ul>
                 </div>    
             </main>

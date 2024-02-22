@@ -28,7 +28,7 @@
 #list-items p{
     margin: 0;
     font-size: x-small;
-    color: rgb(125,125,125);;
+    color: rgb(125,125,125);
 }
 #list-items form,#list-items a{
     display: inline-block;
