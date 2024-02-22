@@ -21,7 +21,7 @@ class AuthModel extends CI_Model{
     public function create_account()
     {
         $role = $this->generate_role();
-        return $this->db->query('INSERT INTO users(firstname,lastname,email,password,role) VALUES(?,?,?,?,?)',
+        return $this->db->query('INSERT INTO users(firstname,lastname,email,password,roles_id) VALUES(?,?,?,?,?)',
                         array($this->input->post('firstname'),
                             $this->input->post('lastname'),
                             $this->input->post('email'),
@@ -35,9 +35,9 @@ class AuthModel extends CI_Model{
     {
         $users = $this->db->query("SELECT * FROM users")->result_array();
         if(count($users)>0){
-            return 'client';
+            return '2';
         }else{
-            return 'admin';
+            return '1';
         }
     }
 
@@ -57,7 +57,7 @@ class AuthModel extends CI_Model{
     /* login user and return user details*/
     public function login(){
         $payload = array($this->input->post('email'),md5($this->input->post('password')));
-        return $this->db->query('SELECT * FROM users WHERE email = ? AND password = ?',$payload)->row_array();
+        return $this->db->query('SELECT * FROM users INNER JOIN roles ON users.roles_id = roles.id WHERE email = ? AND password = ?',$payload)->row_array();
     }
 }
 ?>

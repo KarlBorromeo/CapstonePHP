@@ -29,8 +29,8 @@
     padding: .2rem;
 }
 #products tbody td img{
-    height: 5rem;
-    width: 5rem;
+    height: 6em;
+    width: 6rem;
     object-fit: cover;
     object-position: center;
 }
@@ -80,12 +80,42 @@
 #edit-product button{
     margin-left: .5rem;
 }
-#edit-product img{
+.preview-images{
+    text-align: center;
+}
+.preview-images section{
     width: calc(100%/4.5);
     height: 7rem;
+    position: relative;
+    border-radius: .5rem;
+    margin-right: .5rem!important;
+    padding: .5rem;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    
+}
+.preview-images section img{
+
+    border-radius: .2rem;
+    width: 5rem;
+    height: 5rem;
     object-fit: contain;
     object-position: center;
-    border-radius: .5rem;
-    padding: .5rem;
-    background-color: rgb(210,209,220);
+    padding: .2rem;
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
+}
+.preview-images section input{
+    position: absolute;
+    bottom: .2rem;
+    left: .5rem;
+}
+.preview-images input[type="checkbox"]{
+    display: none;
+}
+.x-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    scale: .5;
 }

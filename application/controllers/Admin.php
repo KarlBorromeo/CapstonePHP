@@ -24,12 +24,10 @@ class Admin extends CI_Controller{
     public function add_product()
     {
         $errors = $this->adminmodel->validate();
-        var_dump($errors);
         if($errors){
             $this->session->set_flashdata('errors', $errors);
         }else{
             $upload_error = $this->adminmodel->move_images();
-            var_dump($upload_error);
             if($upload_error ){
                 $this->session->set_flashdata('errors', $upload_error );
             }else{
@@ -55,13 +53,22 @@ class Admin extends CI_Controller{
         redirect('admin/products');
     }
 
-    /* update product details */
+    /* update product details*/
     public function save_update()
     {
-        $this->output->enable_profiler(TRUE);
         $errors = $this->adminmodel->validate();
-        if(!$errors){
-            $this->adminmodel->save_product_update();
+        if(!$errors AND count($this->input->post('checkbox'))>0){
+            $total_images = count($this->input->post('checkbox'))+ count($_FILES['images']['name']);
+            if($_FILES['images']['name']['0']!= '' AND $total_images<=4){
+                $upload_error = $this->adminmodel->move_images();
+                if(!$upload_error){
+                    $product_details = $this->product->fetch_one_product($this->input->post('product_id'));
+                    $this->adminmodel->save_product_update($product_details);                    
+                }
+            }else{
+                $product_details = $this->product->fetch_one_product($this->input->post('product_id'));
+                $this->adminmodel->save_product_update($product_details);  
+            }
         }
         redirect('admin/products');
     }

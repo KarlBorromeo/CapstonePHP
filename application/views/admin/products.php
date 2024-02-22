@@ -21,6 +21,28 @@
                     })
                     // return false;
                 })
+                $('#img_create_upload').change(function(){
+                    images = $(this)[0].files;
+                    console.log(images);
+                    let imgTags = "";
+                    if(Object.keys(images).length<= 4){
+                        for(let i = 0; i< Object.keys(images).length; i++){
+                            let reader = new FileReader();
+                            console.log(images[i]);
+                            reader.onload = function(event){
+                                imgTags += `<section><input type="radio" value="${i}" id="radio${i}" name="marked_main" checked>
+                                            <label for="radio${i}"><img src="${event.target.result}">Mark</label></section>`
+                                $('.preview-images').html(imgTags);
+                            };
+                            reader.readAsDataURL(images[i]);
+                        }
+                    }else{
+                        alert('Max 4 images!');
+                    }
+                })
+                $(document).on('click','.x-btn',function(){
+                    $(this).parent().hide();
+                })
             })
         </script>
     </head>
@@ -77,9 +99,10 @@
                             <tbody>
 <?php
         foreach($products as $product){
+        $main_index = $product['images']['main_img'];
 ?>
                                 <tr>
-                                    <td class="image d-flex align-items-center gap-3 highlight"><img src="../../../assets/uploads/<?= $product['images'][0]['file_name'] ?>"><?= $product['name'] ?></td>
+                                    <td class="image d-flex align-items-center gap-3 highlight"><img src="../../../assets/uploads/<?= $product['images']['img'][$main_index] ?>"><?= $product['name'] ?></td>
                                     <td><?= $product['id'] ?></td>
                                     <td class="highlight"><?= $product['price'] ?></td>
                                     <td><?= $product['category'] ?></td>
@@ -140,21 +163,23 @@
                                 <label for="stocks" class="ms-2">Stocks</label>
                             </div>
                         </div>
+                        <div class="preview-images mb-3 text-center">
+                            <!-- show here the uploaded images -->
+                        </div>
                         <div class="mb-3">
-                            <input class="form-control" type="file" id="formFileMultiple" multiple name="images[]">
+                            <input id="img_create_upload" class="form-control" type="file" id="formFileMultiple" multiple name="images[]">
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add</button>                                
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
-<?php 
+<?php
     if($this->session->flashdata('edit_product')){
+        $main_index = $this->session->flashdata('edit_product')['images']['main_img'];
 ?>
         <!-- 
             EDIT PRODUCT FORM
@@ -162,9 +187,8 @@
         <div class="" id="edit-product" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content pt-2">
-                   <?= $this->session->flashdata('errors') ?>
-                    <h1 class="modal-title fs-5 text-center mt-1" id="exampleModalLabel">Edit Product <?= $this->session->flashdata('edit_product')['id'] ?></h1>
-                    
+                    <?= $this->session->flashdata('errors') ?>
+                    <h1 class="modal-title fs-5 text-center mt-1" id="exampleModalLabel">Edit Product <?= $this->session->flashdata('edit_product')['id'] ?></h1>      
                     <form class="modal-body" action="/admin/save_update" method="POST" enctype="multipart/form-data">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" placeholder="" id="name" name="product_name" value="<?= $this->session->flashdata('edit_product')['name'] ?>">
@@ -194,18 +218,28 @@
                                 <label for="stocks" class="ms-2">Stocks</label>
                             </div>
                         </div>
-                        <div class="image-preview mb-3 text-center">
+                        <div class="preview-images mb-3 text-center">
 <?php
-    foreach($this->session->flashdata('edit_product')['images'] as $image){
+    foreach($this->session->flashdata('edit_product')['images']['img'] as $key => $image){
 ?>
-                                <img src="../../../assets/uploads/<?= $image['file_name'] ?>">
+                            <section>
+                                <input type="radio" value="<?= $key ?>" id="edit<?= $key ?>" name="marked_main" <?= ($key==$main_index)?'checked':'' ?>>
+                                <input type="checkbox" value="<?= $key ?>" name="checkbox[]" checked id="checkbox<?= $key ?>">
+                                <label class="x-btn" for="checkbox<?= $key ?>"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cad"></svg></label>
+                                <label for="edit<?= $key ?>">
+                                    <img src="../../../assets/uploads/<?= $image?>">Main
+                                </label>
+                            </section>    
 <?php
     }
 ?>                  
                         </div>
+                        <div class="mb-3">
+                            <input id="img_create_upload" class="form-control" type="file" id="formFileMultiple" multiple name="images[]">
+                        </div>
                         <div class="modal-footer">
                             <input type="hidden" value="<?= $this->session->flashdata('edit_product')['id'] ?>" name="product_id">
-                            <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+                            <a href="/admin/products" class="btn btn-danger">Cancel</a>
                             <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>

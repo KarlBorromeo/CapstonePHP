@@ -62,22 +62,26 @@ class AdminModel extends CI_Model{
     /* insert data into table products */
     public function add_product($images)
     {
+        $main_index = $this->input->post('marked_main');
+        $jsonImages = $this->create_json_images($images,$main_index);
         $payload = array($this->input->post('product_name'),
                         $this->input->post('description'),
                         $this->input->post('category'),
                         $this->input->post('price'),
-                        $this->input->post('stocks'));
-        $this->db->query('INSERT INTO products(name,description,category,price,stocks) VALUES(?,?,?,?,?)',$payload);
-        $product_id = $this->db->insert_id();
-        $this->add_images($product_id,$images);
+                        $this->input->post('stocks'),
+                        $jsonImages);
+        $this->db->query('INSERT INTO products(name,description,category,price,stocks,images) VALUES(?,?,?,?,?,?)',$payload);
     }
 
     /* insert data into table images */
-    public function add_images($product_id,$images)
-    {
+    public function create_json_images($images,$main_index)
+    {  
+        $array = array();
         foreach($images as $image){
-            $this->db->query('INSERT INTO images(products_id,file_name) VALUES(?,?)',array($product_id,$image));
+            $array['img'][] = $image;
         }
+        $array['main_img'] = $main_index;
+        return json_encode($array);
     }
 
     /* delete product */
@@ -88,19 +92,36 @@ class AdminModel extends CI_Model{
     }
 
     /* save product updates */
-    public function save_product_update()
+    public function save_product_update($product_details)
     {
+        $updated_img_list = array();
+        $updated_marked_main = $this->input->post('marked_main');
+        foreach( $this->input->post('checkbox') as $index){
+            $updated_img_list[] = $product_details['images']['img'][$index];
+        }
+        foreach($this->image_path_getter() as $image){
+            $updated_img_list[] = $image;
+        }
+        if($updated_marked_main >= count($updated_img_list)){
+            $updated_marked_main = 0;
+        }
+        $jsonImages = $this->create_json_images($updated_img_list,$updated_marked_main);
         $this->db->query('UPDATE products 
-        SET name = ?, description = ?, category = ?, price = ?, stocks = ?
-        WHERE id = ?',
-        array($this->input->post('product_name'),
-            $this->input->post('description'),
-            $this->input->post('category'),
-            $this->input->post('price'),
-            $this->input->post('stocks'),
-            $this->input->post('product_id'),
-        ));
+                    SET name = ?,
+                    description = ?, 
+                    category = ?, 
+                    price = ?, 
+                    stocks = ?,
+                    images = ?
+                    WHERE id = ?',
+                    array($this->input->post('product_name'),
+                        $this->input->post('description'),
+                        $this->input->post('category'),
+                        $this->input->post('price'),
+                        $this->input->post('stocks'),
+                        $jsonImages,
+                        $this->input->post('product_id'),
+                    ));
     }
-
 }
 ?>

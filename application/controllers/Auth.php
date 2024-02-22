@@ -40,7 +40,7 @@ class Auth extends CI_Controller {
 		$user = $this->authmodel->login();
 		if($user){
 			$this->session->set_userdata(array('user'=>$user));
-			if($user['role'] == 'admin'){
+			if($user['type'] == 'admin'){
 				redirect('/admin');
 			}
 			redirect('/products');
