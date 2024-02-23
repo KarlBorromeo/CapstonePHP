@@ -38,6 +38,7 @@ class Auth extends CI_Controller {
 	public function login()
 	{
 		$user = $this->authmodel->login();
+		var_dump($user);
 		if($user){
 			$this->session->set_userdata(array('user'=>$user));
 			if($user['type'] == 'admin'){

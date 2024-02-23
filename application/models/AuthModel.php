@@ -35,9 +35,9 @@ class AuthModel extends CI_Model{
     {
         $users = $this->db->query("SELECT * FROM users")->result_array();
         if(count($users)>0){
-            return '2';
+            return '4';
         }else{
-            return '1';
+            return '3';
         }
     }
 
@@ -57,7 +57,7 @@ class AuthModel extends CI_Model{
     /* login user and return user details*/
     public function login(){
         $payload = array($this->input->post('email'),md5($this->input->post('password')));
-        return $this->db->query('SELECT * FROM users INNER JOIN roles ON users.roles_id = roles.id WHERE email = ? AND password = ?',$payload)->row_array();
+        return $this->db->query('SELECT users.id as id,firstname,lastname,email,roles_id, type FROM users INNER JOIN roles ON users.roles_id = roles.id WHERE email = ? AND password = ?',$payload)->row_array();
     }
 }
 ?>

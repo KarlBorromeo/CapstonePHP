@@ -21,9 +21,10 @@
                     });
                 })
                 $('#add-cart').submit(function(res){
-                    console.log($(this).attr('action'));
                     $.post($(this).attr('action'),$(this).serialize(),function(res){
                         console.log(res);
+                        $('#modal-bg').show();
+                        setTimeout(function(){$('#modal-bg').hide()}, 300);
                     })
                     return false;
                 })
@@ -78,6 +79,7 @@
                             <input id="total_amount" type="text" value="<?= $product['price'] ?>" disabled class="text-primary fw-semibold border">  
                         </label>
                         <form id="add-cart" action="/products/add_cart" method="POST">
+                            
                             <input type="hidden" value="<?= $product['id'] ?>" name="product_id">
                             <input id="quantity_addcart" type="hidden" name="quantity" min="1" value="1" class="border"> 
                             <button  type="submit" class="btn btn-outline-primary"><img src="../../assets/images/cart.svg">Add to Cart</button>                            
@@ -157,5 +159,12 @@
                 </ul>
             </main>
         </div>
+        <div id="modal-bg">
+            <section id="modal">
+                Item Added to Cart
+            </section>              
+        </div>
+     
     </body>
+
 </html>

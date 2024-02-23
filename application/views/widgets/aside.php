@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="../../../stylesheets/widgets/aside.css">
     </head>
     <aside class="d-flex flex-column align-items-center gap-3">
-        <a href="/products/"><img src="../../../assets/images/organic_shop_fav.ico"></a>
+        <a href="/products"><img src="../../../assets/images/organic_shop_fav.ico"></a>
         <span>
            <img src="../../../assets/images/product_figma.svg"> 
         </span>

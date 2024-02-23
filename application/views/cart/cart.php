@@ -11,6 +11,43 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../../stylesheets/home.css">
         <link rel="stylesheet" href="../../../stylesheets/cart/cart.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                // $('#total_with_fee').html('$'+ (parseFloat($('#total_amount').val()) + 5));
+
+                $.get('/products/feth_cart_details',function(res){
+                    $('#list-items').html(res);
+                    get_total_amount();
+                })
+                
+
+                $(document).on('change','.quantity',function(){
+                    var form = $(this).closest('form');
+                    $.post(form.attr('action'), form.serialize(), function(res) {
+                        $('#list-items').html(res);
+                        get_total_amount();
+                        return false;
+                    });
+                 
+                })
+                $(document).on('click','a.del',function(event){
+                    console.log($(this).attr('href'));
+                    $.get($(this).attr('href'),function(res){
+                        $('#list-items').html(res);
+                    })
+                    event.preventDefault();
+                })
+            })
+            function get_total_amount(){
+                $.get('/products/get_total_amount',function(res){
+                    console.log(res);
+                    $('#total_amount').val(res);
+                    $('#p-total-amount').html('$'+res);
+                    $('#total_with_fee').html('$'+ (parseFloat(res) + 5));
+                })
+            }
+        </script>
     </head>
     <body class="d-flex">
         <?php $this->load->view('widgets/aside'); ?>
@@ -22,100 +59,11 @@
                         <input type="text" name="search" placeholder="Search Products" class="border">
                         <button type="submit"><img src="../../assets/images/search.svg"></button>                        
                     </div>
-                    <a href="#" class="btn btn-primary p-3"><img src="../../assets/images/cart.svg"> Cart(0)</a>
                 </form>
                 <div class="d-flex gap-5">
                     <ul id="list-items">
-                        <li class="d-flex gap-5 align-items-center justify-content-between">
-                            <div>
-                                <img src="../../../assets/images/burger.png">
-                                <section class="text-center">
-                                    <p>Vegetable<p>
-                                    <span class="text-primary fw-semibold border">$10</span>
-                                </section>                                
-                            </div>
-                            <div class="d-flex align-items-center gap-4">
-                                <form action="" method="POST" class="d-flex gap-4">
-                                    <label>
-                                        <p>Quantity</p>
-                                        <input type="number" name="quantity" min="1" value="1" class="border"> 
-                                    </label>
-                                    <label>
-                                        <p>Total Amount</p>
-                                        <input type="text" value="$10" disabled class="text-primary fw-semibold border">  
-                                    </label> 
-                                </form>
-                                <a href="#" class="border border-top-0 border-bottom-0 border-end-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="red" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cadced"/></svg></a>
-                            </div>
-                        </li>
-                        <li class="d-flex gap-5 align-items-center justify-content-between">
-                            <div>
-                                <img src="../../../assets/images/burger.png">
-                                <section class="text-center">
-                                    <p>Vegetable<p>
-                                    <span class="text-primary fw-semibold border">$10</span>
-                                </section>                                
-                            </div>
-                            <div class="d-flex align-items-center gap-4">
-                                <form action="" method="POST" class="d-flex gap-4">
-                                    <label>
-                                        <p>Quantity</p>
-                                        <input type="number" name="quantity" min="1" value="1" class="border"> 
-                                    </label>
-                                    <label>
-                                        <p>Total Amount</p>
-                                        <input type="text" value="$10" disabled class="text-primary fw-semibold border">  
-                                    </label> 
-                                </form>
-                                <a href="#" class="border border-top-0 border-bottom-0 border-end-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="red" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cadced"/></svg></a>
-                            </div>
-                        </li>
-                        <li class="d-flex gap-5 align-items-center justify-content-between">
-                            <div>
-                                <img src="../../../assets/images/burger.png">
-                                <section class="text-center">
-                                    <p>Vegetable<p>
-                                    <span class="text-primary fw-semibold border">$10</span>
-                                </section>                                
-                            </div>
-                            <div class="d-flex align-items-center gap-4">
-                                <form action="" method="POST" class="d-flex gap-4">
-                                    <label>
-                                        <p>Quantity</p>
-                                        <input type="number" name="quantity" min="1" value="1" class="border"> 
-                                    </label>
-                                    <label>
-                                        <p>Total Amount</p>
-                                        <input type="text" value="$10" disabled class="text-primary fw-semibold border">  
-                                    </label> 
-                                </form>
-                                <a href="#" class="border border-top-0 border-bottom-0 border-end-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="red" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cadced"/></svg></a>
-                            </div>
-                        </li>
-                        <li class="d-flex gap-5 align-items-center justify-content-between">
-                            <div>
-                                <img src="../../../assets/images/burger.png">
-                                <section class="text-center">
-                                    <p>Vegetable<p>
-                                    <span class="text-primary fw-semibold border">$10</span>
-                                </section>                                
-                            </div>
-                            <div class="d-flex align-items-center gap-4">
-                                <form action="" method="POST" class="d-flex gap-4">
-                                    <label>
-                                        <p>Quantity</p>
-                                        <input type="number" name="quantity" min="1" value="1" class="border"> 
-                                    </label>
-                                    <label>
-                                        <p>Total Amount</p>
-                                        <input type="text" value="$10" disabled class="text-primary fw-semibold border">  
-                                    </label> 
-                                </form>
-                                <a href="#" class="border border-top-0 border-bottom-0 border-end-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="red" xmlns:v="https://vecta.io/nano"><path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#cadced"/></svg></a>
-                            </div>
-                        </li>
                     </ul>
-                    <form id="checkout-form" action="" method="POST">
+                    <form id="checkout-form" action="/products/checkout" method="POST">
                         <div class="row">
                             <div class="form-floating mb-3 col-6">
                                 <input type="text" class="form-control" id="firstname" placeholder="" name="firstname">
@@ -151,7 +99,8 @@
                         <p>Order Summary</p>
                         <section class="d-flex justify-content-between">
                             <p>Items</p>
-                            <p>$30</p>
+                            <input id="total_amount" type="hidden" value="0">
+                            <p id="p-total-amount">0</p>
                         </section>
                         <section class="d-flex justify-content-between">
                             <p>Shipping Fee</p>
@@ -159,7 +108,7 @@
                         </section>
                         <section class="d-flex justify-content-between">
                             <p>Total Amount</p>
-                            <p>$35</p>
+                            <p id="total_with_fee">$35</p>
                         </section>
                         <button type="submit" class="btn btn-primary text-center col-12">Proceed to Checkout</button>
                     </form>
