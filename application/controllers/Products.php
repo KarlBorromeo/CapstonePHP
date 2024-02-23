@@ -1,10 +1,19 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Products extends CI_Controller{
+    private $shippingFee;
+
     public function __construct()
     {
         parent::__construct();
+        $this->shippingFee = 10;
         $this->load->model('product');
+    }
+    
+    /* return the shipping fee */
+    public function shippFee_getter()
+    {
+        echo $this->shippingFee;
     }
     public function index()
     {
@@ -23,6 +32,8 @@ class Products extends CI_Controller{
     public function update_total(){
         echo $this->calc_total_precart();
     }
+
+    /* calculate the total before add to cart */
     private function calc_total_precart()
     {
         $product = $this->product->fetch_one_product($this->input->post('product_id'));
@@ -47,7 +58,7 @@ class Products extends CI_Controller{
     /* fetch the items of the cart*/
     public function cart(){
         if($this->session->userdata('user')){
-            $this->load->view('cart/cart');
+            $this->load->view('cart/cart',array('firstname'=>$this->session->userdata('user')['firstname'],'lastname'=>$this->session->userdata('user')['lastname']));
         }else{
             redirect('/auth/login');
         }
@@ -94,7 +105,13 @@ class Products extends CI_Controller{
     /*proceed to checkout */
     public function checkout()
     {
-        var_dump($this->input->post());
+        if($this->session->userdata('user')){
+            $error = $this->product->validate_checkout();
+            // var_dump($this->session->userdata('user'));
+
+        }else{
+            redirect('/auth/login');
+        }
     }
 }
 ?>

@@ -77,7 +77,42 @@ class Product extends CI_Model{
                                     $this->input->post('product_id'),
                                     $this->session->userdata('user')['id']));
         }
+    }
 
+    /* validate checkout form */
+    public function validate_checkout(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('firstname','Firstname','required|alpha');
+        $this->form_validation->set_rules('lastname','Lastname','required|alpha');
+        $this->form_validation->set_rules('address','Address','required');
+        $this->form_validation->set_rules('city','City','required');
+        $this->form_validation->set_rules('state','State','required');
+        $this->form_validation->set_rules('zip-code','ZIP Code','required');
+        if($this->form_validation->run()){
+            $cart_details = $this->fetch_cart($this->session->userdata('user')['id']);
+            $cart_items = $cart_details['cart'];
+            $total_amount = $cart_details['total_amount'];
+            $payload= array('total_amount' => $total_amount,
+                            'firstname' => $this->input->post('firstname'),
+                            'lastname' => $this->input->post('lastname'),
+                            'address' => $this->input->post('address'),
+                            'address2' => $this->input->post('address2'),
+                            'city' => $this->input->post('city'),
+                            'state' => $this->input->post('state'),
+                            'zip-code' => $this->input->post('zip-code'),
+                            'order-items' => json_encode($cart_items));
+            var_dump($payload);
+            $this->add_order($payload);
+        }else{
+            return  validation_errors('<span class="error">', '</span>');
+        }
+    }
+
+    /* add order after checkout validated*/
+    private function add_order($payload)
+    {
+        $this->db->query('INSERT INTO orders(total_amount,firstname,lastname,address,address2,city,state,zip_code,order_items) 
+                        VALUES(?,?,?,?,?,?,?,?,?)',$payload);
     }
 
 }

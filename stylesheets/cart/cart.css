@@ -16,9 +16,10 @@
 #list-items li div > img{
     width: 7rem;
     height: 7rem;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
     border-radius: 1rem;
+    margin-left: 1rem;
 }
 #list-items div section{
     margin-left: 1rem;
