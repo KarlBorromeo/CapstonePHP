@@ -121,6 +121,7 @@ main > form button{
     background-color: transparent;
     padding: .5rem 2rem;
     border-radius: .5rem;
+    color: white;
 }
 #all-orders select:focus{
     box-shadow: 0 0 2px 1px white;

@@ -38,6 +38,20 @@
                     })
                     event.preventDefault();
                 })
+
+                $('#checkout-form').submit(function(){
+                    console.log($(this).attr('action'));
+                    $.post($(this).attr('action'),$(this).serialize(),function(res){
+                        if(res!= ''){
+                            $('#stripe-container').html(res);
+                        }else{
+                            $.get('/checkout/checkout_error_getter',function(error){
+                                alert(error);
+                            })
+                        }  
+                    })
+                    return false;
+                })
             })
             function get_total_amount(){
                 $.get('/products/get_total_amount',function(res){
@@ -48,7 +62,6 @@
                         $('#shipfee').html('$'+ fee);
                         $('#total_with_fee').html('$'+ (parseFloat(res) + parseFloat(fee)));
                     })
-                    
                 })
             }
         </script>
@@ -67,19 +80,19 @@
                 <div class="d-flex gap-5">
                     <ul id="list-items">
                     </ul>
-                    <form id="checkout-form" action="/products/checkout" method="POST">
+                    <form id="checkout-form" action="/checkout/checkout_now" method="POST">
                         <div class="row">
                             <div class="form-floating mb-3 col-6">
-                                <input type="text" class="form-control" id="firstname" placeholder="" name="firstname" value="<?= $firstname ?>">
+                                <input  type="text" class="form-control" id="firstname" placeholder="" name="firstname" value="<?= $firstname ?>">
                                 <label for="firstname">Firstname</label>
                             </div>
                             <div class="form-floating mb-3 col-6">
-                                <input type="text" class="form-control" id="lastname" placeholder="" name="lastname" value="<?= $lastname ?>">
+                                <input  type="text" class="form-control" id="lastname" placeholder="" name="lastname" value="<?= $lastname ?>">
                                 <label for="lastname">Lastname</label>
                             </div>
                         </div> 
                         <div class="form-floating mb-3 col-12">
-                            <input type="text" class="form-control" id="address" placeholder="" name="address">
+                            <input  type="text" class="form-control" id="address" placeholder="" name="address">
                             <label for="address">Address</label>
                         </div>
                         <div class="form-floating mb-3 col-12">
@@ -88,15 +101,15 @@
                         </div>
                         <div class="row">
                             <div class="form-floating mb-3 col-4">
-                                <input type="text" class="form-control" id="city" placeholder="" name="city">
+                                <input  type="text" class="form-control" id="city" placeholder="" name="city">
                                 <label for="city">City</label>
                             </div>
                             <div class="form-floating mb-3 col-4">
-                                <input type="text" class="form-control" id="state" placeholder="" name="state">
+                                <input  type="text" class="form-control" id="state" placeholder="" name="state">
                                 <label for="state">State</label>
                             </div>
                             <div class="form-floating mb-3 col-4">
-                                <input type="number" class="form-control" id="zip-code" placeholder="" name="zip-code">
+                                <input  type="number" class="form-control" id="zip-code" placeholder="" name="zip-code">
                                 <label for="zip-code">Zip Code</label>
                             </div>
                         </div>
@@ -114,11 +127,11 @@
                             <p>Total Amount</p>
                             <p id="total_with_fee">$35</p>
                         </section>
-
                         <button type="submit" class="btn btn-primary text-center col-12">Proceed to Checkout</button>
                     </form>
                 </div>
             </main>
         </div>
+        <div id="stripe-container"></div>
     </body>
 </html>

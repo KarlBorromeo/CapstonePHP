@@ -10,6 +10,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../../stylesheets/admin/orders.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                // $(document).on('change','.select-status' function(){})
+                $(document).on('change','.select-status',function(){
+                    form = $(this).closest('form');
+                    $.post(form.attr('action'),form.serialize(),function(res){
+                        console.log(res);
+                        return false;
+                    })
+                })
+            })
+        </script>
     </head>
     <body class="d-flex">
         <?php $this->load->view('admin/widgets/aside.php') ?>
@@ -58,7 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!-- <tr>
                                     <td class="order-id" >123</td>
                                     <td>09-06-2022</td>
                                     <td class="receiver">
@@ -76,197 +89,32 @@
                                             </select>                                            
                                         </form>
                                     </td>
-                                </tr>
+                                </tr> -->
+<?php 
+    foreach($orders as $order){
+?>
                                 <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
+                                    <td class="order-id" ><?=  $order['id'] ?></td>
+                                    <td><?=  $order['order_date'] ?></td>
                                     <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
+                                        <p class="highlight"><?=  $order['receiver_name'] ?></p>
+                                        <p><?=  $order['full_address'] ?></p>
                                     </td>
-                                    <td class="highlight">$10</td>
+                                    <td class="highlight"><?=  $order['total_amount'] ?></td>
                                     <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
+                                        <form action="/admin/order_update/<?=  $order['id'] ?>" method="POST">
+                                            <select class="select-status" class="highlight" name="status">
+                                                <option <?= ($order['status'] == 'pending')?'selected':'' ?> value="pending" >Pending</option>
+                                                <option <?= ($order['status'] == 'on-process')?'selected':'' ?> value="on-process" >On-Process</option>
+                                                <option <?= ($order['status'] == 'shipped')?'selected':'' ?> value="shipped" >Shipped</option>
+                                                <option <?= ($order['status'] == 'delivered')?'selected':'' ?> value="delivered" >Delivered</option>
                                             </select>                                            
                                         </form>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
+<?php
+    }
+?>
                             </tbody>
                         </table>                        
                     </section>

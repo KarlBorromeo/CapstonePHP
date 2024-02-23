@@ -69,3 +69,8 @@
 #checkout-form section p{
     padding: 0 1rem;
 }
+#stripe-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+}

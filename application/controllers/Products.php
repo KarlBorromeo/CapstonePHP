@@ -52,7 +52,6 @@ class Products extends CI_Controller{
         }else{
             redirect('/auth/login');
         }
-
     }
 
     /* fetch the items of the cart*/
@@ -97,18 +96,6 @@ class Products extends CI_Controller{
         if($this->session->userdata('user')){
             $this->product->update_item($cart_id);
             $this->feth_cart_details();
-        }else{
-            redirect('/auth/login');
-        }
-    }
-
-    /*proceed to checkout */
-    public function checkout()
-    {
-        if($this->session->userdata('user')){
-            $error = $this->product->validate_checkout();
-            // var_dump($this->session->userdata('user'));
-
         }else{
             redirect('/auth/login');
         }

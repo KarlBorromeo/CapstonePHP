@@ -35,9 +35,9 @@ class AuthModel extends CI_Model{
     {
         $users = $this->db->query("SELECT * FROM users")->result_array();
         if(count($users)>0){
-            return '4';
+            return '6';
         }else{
-            return '3';
+            return '5';
         }
     }
 

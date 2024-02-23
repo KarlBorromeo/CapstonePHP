@@ -87,7 +87,7 @@ class Product extends CI_Model{
         $this->form_validation->set_rules('address','Address','required');
         $this->form_validation->set_rules('city','City','required');
         $this->form_validation->set_rules('state','State','required');
-        $this->form_validation->set_rules('zip-code','ZIP Code','required');
+        $this->form_validation->set_rules('zip-code','ZIP Code','required|numeric');
         if($this->form_validation->run()){
             $cart_details = $this->fetch_cart($this->session->userdata('user')['id']);
             $cart_items = $cart_details['cart'];
@@ -101,19 +101,17 @@ class Product extends CI_Model{
                             'state' => $this->input->post('state'),
                             'zip-code' => $this->input->post('zip-code'),
                             'order-items' => json_encode($cart_items));
-            var_dump($payload);
-            $this->add_order($payload);
+            return $payload;
         }else{
-            return  validation_errors('<span class="error">', '</span>');
+            return  array('error' => validation_errors(' ', ' '));
         }
     }
 
-    /* add order after checkout validated*/
-    private function add_order($payload)
+    /* add order*/
+    public function add_order($payload)
     {
         $this->db->query('INSERT INTO orders(total_amount,firstname,lastname,address,address2,city,state,zip_code,order_items) 
                         VALUES(?,?,?,?,?,?,?,?,?)',$payload);
     }
-
 }
 ?>

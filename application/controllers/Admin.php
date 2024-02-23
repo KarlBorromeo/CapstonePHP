@@ -10,7 +10,8 @@ class Admin extends CI_Controller{
     }
     public function index()
     {
-        $this->load->view('/admin/orders');
+        $orders = $this->adminmodel->fetch_orders();
+        $this->load->view('/admin/orders',array('orders'=> $orders));
     }
 
     /* fetch all product */
@@ -71,6 +72,12 @@ class Admin extends CI_Controller{
             }
         }
         redirect('admin/products');
+    }
+
+    /* update order status */
+    public function order_update($order_id)
+    {
+        $this->adminmodel->update_status($order_id);
     }
 }
 ?>
