@@ -45,7 +45,6 @@ class Checkout extends CI_Controller{
             $customerId = $stripeCustomer->id; 
             $cart = $this->product->fetch_cart($this->session->userdata('user')['id']);
             \Stripe\Charge::create ([
-                /* update the amount here */
                     "amount" => 100 * ($cart['total_amount'] + $this->shippingFee),
                     "currency" => "usd",
                     "customer" => $customerId,
@@ -55,7 +54,6 @@ class Checkout extends CI_Controller{
             $this->session->unset_userdata('form_order_payload');
             redirect('/products');
         }
-
     }
 }
 ?>

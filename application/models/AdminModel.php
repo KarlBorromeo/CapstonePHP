@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') OR exit('direct acess not allowed');
-
 class AdminModel extends CI_Model{
     private $uploaded_image_paths = array();
     public function __construct()
@@ -7,6 +6,7 @@ class AdminModel extends CI_Model{
         parent::__construct();
         $this->uploaded_image_paths  = [];
     }
+
     /* return the path of uplaoded images */
     public function move_images()
     {
@@ -122,13 +122,6 @@ class AdminModel extends CI_Model{
                         $this->input->post('product_id'),
                     ));
     }
-
-    /* fetch all orders */
-    // public function fetch_orders(){
-    //     return $this->db->query("SELECT id, status,total_amount, date_format(order_date,'%m-%d-%Y') as order_date, 
-    //                             concat(firstname, ' ' , lastname) as receiver_name,
-    //                             concat(address,' ', address2,',',city,',',state,',',zip_code) as full_address FROM orders")->result_array();
-    // }
 
     /* filter fetch orders by status */
     public function fetch_all_orders($status = '')

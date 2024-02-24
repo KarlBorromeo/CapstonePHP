@@ -14,8 +14,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
-                // $('#total_with_fee').html('$'+ (parseFloat($('#total_amount').val()) + 5));
-
                 /* get all the list of items in user's cart */
                 $.get('/cart/feth_cart_details',function(res){
                     console.log(res);

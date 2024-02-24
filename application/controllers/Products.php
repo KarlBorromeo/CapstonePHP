@@ -1,5 +1,4 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 class Products extends CI_Controller{
     private $shippingFee;
     private $cart_items_count;
@@ -34,6 +33,8 @@ class Products extends CI_Controller{
     }
 
     /* render the product list on the partials */
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
     public function all_products_uncategorized($start = 1)
     {
         $products = $this->product->fetch_all_product();
@@ -41,6 +42,8 @@ class Products extends CI_Controller{
     }
 
     /* fetch all filtered category product and render on partials*/
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
     public function all_products_categorized($category='',$start = 1)
     {
         $products = $this->product->fetch_all_product($category);
@@ -48,6 +51,8 @@ class Products extends CI_Controller{
     }
 
     /* search the name of the product and render to paritals the results */
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
     public function search_product($start = 1)
     {
         $products = $this->product->search_product($this->input->post('search'));

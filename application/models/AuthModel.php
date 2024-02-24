@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') or exit('direct acess not allowed');
-
 class AuthModel extends CI_Model{
     /*VALIDATE the signup form return error if failed else null*/
     public function validate()
@@ -57,7 +56,8 @@ class AuthModel extends CI_Model{
     /* login user and return user details*/
     public function login(){
         $payload = array($this->input->post('email'),md5($this->input->post('password')));
-        return $this->db->query('SELECT users.id as id,firstname,lastname,email,roles_id, type FROM users INNER JOIN roles ON users.roles_id = roles.id WHERE email = ? AND password = ?',$payload)->row_array();
+        return $this->db->query('SELECT users.id as id,firstname,lastname,email,roles_id, type FROM users 
+                            INNER JOIN roles ON users.roles_id = roles.id WHERE email = ? AND password = ?',$payload)->row_array();
     }
 }
 ?>
