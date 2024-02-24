@@ -34,7 +34,7 @@ class Products extends CI_Controller{
     }
 
     /* render the product list on the partials */
-    public function render_all_product($start = 1)
+    public function all_products_uncategorized($start = 1)
     {
         $products = $this->product->fetch_all_product();
         $this->load->view('partials/client_product_list',array('products' => $products,'start_index' => $start,'method' => 'render_all_product'));
@@ -58,7 +58,6 @@ class Products extends CI_Controller{
     public function item($product_id)
     {
         $product = $this->product->fetch_one_product($product_id);
-        // $similar_products = $this->product->fetch_all_product($product['category']);
         $this->load->view('item/item',array('product'=>$product,'main_index'=>$product['images']['main_img']));
     }
 

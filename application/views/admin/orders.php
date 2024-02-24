@@ -14,6 +14,11 @@
         <script>
             $(document).ready(function(){
 
+                /* fetch all uncategorized orders intially */
+                $.get('admin/all_orders_uncategorized',function(res){
+                    $('tbody').html(res);
+                })
+
                 /* update the order status realtime */
                 $(document).on('change','.select-status',function(){
                     form = $(this).closest('form');
@@ -37,7 +42,16 @@
                     var form = $(this).parent();
                     $.post(form.attr('action'),form.serialize(),function(res){
                         $('tbody').html(res);
-                    })                        
+                    })                    
+                })
+
+                /* pagination */
+                $(document).on('click','.pagination',function(event){
+                    console.log($(this).attr('href'));
+                    $.get($(this).attr('href'),function(res){
+                        $('tbody').html(res);
+                    })
+                    event.preventDefault();
                 })
                 
             })
@@ -100,31 +114,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-<?php 
-    foreach($orders as $order){
-?>
-                                <tr>
-                                    <td class="order-id" ><?=  $order['id'] ?></td>
-                                    <td><?=  $order['order_date'] ?></td>
-                                    <td class="receiver">
-                                        <p class="highlight"><?=  $order['receiver_name'] ?></p>
-                                        <p><?=  $order['full_address'] ?></p>
-                                    </td>
-                                    <td class="highlight"><?=  $order['total_amount'] ?></td>
-                                    <td>
-                                        <form action="/admin/order_update/<?=  $order['id'] ?>" method="POST">
-                                            <select class="select-status" class="highlight" name="status">
-                                                <option <?= ($order['status'] == 'pending')?'selected':'' ?> value="pending" >Pending</option>
-                                                <option <?= ($order['status'] == 'on_process')?'selected':'' ?> value="on_process" >On-Process</option>
-                                                <option <?= ($order['status'] == 'shipped')?'selected':'' ?> value="shipped" >Shipped</option>
-                                                <option <?= ($order['status'] == 'delivered')?'selected':'' ?> value="delivered" >Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr>
-<?php
-    }
-?>
                             </tbody>
                         </table>                        
                     </section>

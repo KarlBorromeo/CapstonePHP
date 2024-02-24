@@ -10,45 +10,66 @@ class Admin extends CI_Controller{
     }
     public function index()
     {
-        $orders = $this->adminmodel->fetch_orders();
-        $this->load->view('/admin/orders',array('orders'=> $orders));
+        $this->load->view('/admin/orders');
     }
 
-    /* fetch filtered category status orders */
-    public function all_orders_categorized($status='')
+    /* all fetch unctageorized orders */
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
+    public function all_orders_uncategorized($start = 1)
     {
-        $orders = $this->adminmodel->categorized_fetch_orders($status);
-        $this->load->view('partials/admin_order_list',array('orders'=>$orders));
+        $orders = $this->adminmodel->fetch_all_orders();
+        $this->load->view('partials/admin_order_list',array('method'=>'all_orders_uncategorized','orders'=>$orders,'start_index'=>$start));
+    }
+    /* fetch filtered category status orders */
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
+    public function all_orders_categorized($status='',$start = 1)
+    {
+        $orders = $this->adminmodel->fetch_all_orders($status);
+        $this->load->view('partials/admin_order_list',array('method'=>'all_orders_categorized','orders'=>$orders,'start_index'=>$start,'status'=>$status));
     }
 
     /* search order id */
-    public function search_order_id()
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
+    public function search_order_id($start = 1)
     {
         $orders = $this->adminmodel->search_order_id($this->input->post('search'));
-        $this->load->view('partials/admin_order_list',array('orders'=>$orders));
-        // $this->load->view('/admin/orders',array('orders'=> $orders));
+        $this->load->view('partials/admin_order_list',array('method'=>'search_order_id','orders'=>$orders,'start_index'=>$start));
     }
 
-    /* fetch all product */
+    /* render admin product page */
     public function products()
     {
-        $products = $this->product->fetch_all_product();
-        $this->load->view('admin/products',array('products'=>$products));
+        $this->load->view('admin/products');
     }
 
-    /* fetch all filtered category product */
-    public function all_products_categorized($category='')
+    /* fetch all uncetgorized products */
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
+    public function all_product_uncategorized($start = 1)
+    {
+        $products = $this->product->fetch_all_product();
+        $this->load->view('partials/admin_product_list',array('method'=>'all_product_uncategorized','products'=>$products,'start_index'=>$start));
+    }
+
+    /* fetch all filtered category product*/
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
+    public function all_products_categorized($category='',$start = 1)
     {
         $products = $this->product->fetch_all_product($category);
-        $this->load->view('partials/admin_product_list',array('products'=>$products));
-        // $this->load->view('admin/products',array('products'=>$products));
+        $this->load->view('partials/admin_product_list',array('method'=>'all_products_categorized','products'=>$products,'start_index'=>$start,'category' => $category));
     }
 
     /* search the name of the product */
-    public function search_product()
+    /* passing the start refence for the number page */
+    /* passing the method name so that will be the reference of the anchor tag in pagination */
+    public function search_product($start = 1)
     {
         $products = $this->product->search_product($this->input->post('search'));
-        $this->load->view('partials/admin_product_list',array('products'=>$products));
+        $this->load->view('partials/admin_product_list',array( 'method' => 'search_product','products'=>$products,'start_index' => $start));
     }
 
     /*add product */

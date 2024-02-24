@@ -124,25 +124,25 @@ class AdminModel extends CI_Model{
     }
 
     /* fetch all orders */
-    public function fetch_orders(){
-        return $this->db->query("SELECT id, status,total_amount, date_format(order_date,'%m-%d-%Y') as order_date, 
-                                concat(firstname, ' ' , lastname) as receiver_name,
-                                concat(address,' ', address2,',',city,',',state,',',zip_code) as full_address FROM orders")->result_array();
+    // public function fetch_orders(){
+    //     return $this->db->query("SELECT id, status,total_amount, date_format(order_date,'%m-%d-%Y') as order_date, 
+    //                             concat(firstname, ' ' , lastname) as receiver_name,
+    //                             concat(address,' ', address2,',',city,',',state,',',zip_code) as full_address FROM orders")->result_array();
+    // }
+
+    /* filter fetch orders by status */
+    public function fetch_all_orders($status = '')
+    {
+        $query = "SELECT id, status,total_amount, date_format(order_date,'%m-%d-%Y') as order_date, 
+                    concat(firstname, ' ' , lastname) as receiver_name,
+                    concat(address,' ', address2,',',city,',',state,',',zip_code) as full_address FROM orders ". ($status != '' ? "WHERE status = ?":'');
+        return $this->db->query($query,array($status))->result_array();
     }
 
     /* update the status of order */
     public function update_status($order_id)
     {
         $this->db->query('UPDATE orders SET status = ? WHERE id = ?',array($this->input->post('status'),$order_id));
-    }
-
-    /* filter fetch orders by status */
-    public function categorized_fetch_orders($status)
-    {
-        $query = "SELECT id, status,total_amount, date_format(order_date,'%m-%d-%Y') as order_date, 
-                    concat(firstname, ' ' , lastname) as receiver_name,
-                    concat(address,' ', address2,',',city,',',state,',',zip_code) as full_address FROM orders ". ($status != '' ? "WHERE status = ?":'');
-        return $this->db->query($query,array($status))->result_array();
     }
 
     /* search order id */

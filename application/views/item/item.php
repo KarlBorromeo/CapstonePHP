@@ -115,7 +115,7 @@
                         </form>                       
                     </section>
                 </div>
-                <ul id="products" class="mt-5">
+                <ul id="products" class="mt-5 text-center">
                 </ul>
             </main>
         </div>
