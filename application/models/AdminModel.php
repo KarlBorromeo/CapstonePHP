@@ -34,7 +34,7 @@ class AdminModel extends CI_Model{
             $this->uploaded_image_paths = $image_path;    
         }else{
             return '<p class="error">Max 4 images!</p>';
-        }
+        }            
     }
 
     /* validate upload form fields */
@@ -87,7 +87,6 @@ class AdminModel extends CI_Model{
     /* delete product */
     public function delete_product($product_id)
     {
-        $this->db->query('DELETE FROM images where products_id = ?', array($product_id));
         $this->db->query('DELETE FROM products where id = ?', array($product_id)); 
     }
 
@@ -135,6 +134,23 @@ class AdminModel extends CI_Model{
     public function update_status($order_id)
     {
         $this->db->query('UPDATE orders SET status = ? WHERE id = ?',array($this->input->post('status'),$order_id));
+    }
+
+    /* filter fetch orders by status */
+    public function categorized_fetch_orders($status)
+    {
+        $query = "SELECT id, status,total_amount, date_format(order_date,'%m-%d-%Y') as order_date, 
+                    concat(firstname, ' ' , lastname) as receiver_name,
+                    concat(address,' ', address2,',',city,',',state,',',zip_code) as full_address FROM orders ". ($status != '' ? "WHERE status = ?":'');
+        return $this->db->query($query,array($status))->result_array();
+    }
+
+    /* search order id */
+    public function search_order_id($id)
+    {
+        return $this->db->query("SELECT id, status,total_amount, date_format(order_date,'%m-%d-%Y') as order_date, 
+                    concat(firstname, ' ' , lastname) as receiver_name,
+                    concat(address,' ', address2,',',city,',',state,',',zip_code) as full_address FROM orders WHERE id LIKE '{$id}%'")->result_array();
     }
 }
 ?>

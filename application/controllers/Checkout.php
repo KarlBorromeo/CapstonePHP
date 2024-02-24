@@ -12,7 +12,7 @@ class Checkout extends CI_Controller{
     public function checkout_now()
     {
         if($this->session->userdata('user')){
-            $result = $this->product->validate_checkout();
+            $result = $this->product->validate_checkout($this->shippingFee);
             if(!isset($result['error'])){
                 $this->session->set_userdata(array('form_order_payload'=>$result));
                 $this->session->unset_userdata('checkout-error');

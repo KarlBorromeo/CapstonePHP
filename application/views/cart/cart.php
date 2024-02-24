@@ -16,12 +16,14 @@
             $(document).ready(function(){
                 // $('#total_with_fee').html('$'+ (parseFloat($('#total_amount').val()) + 5));
 
-                $.get('/products/feth_cart_details',function(res){
+                /* get all the list of items in user's cart */
+                $.get('/cart/feth_cart_details',function(res){
+                    console.log(res);
                     $('#list-items').html(res);
                     get_total_amount();
                 })
                 
-
+                /* update the total when quantity changed */
                 $(document).on('change','.quantity',function(){
                     var form = $(this).closest('form');
                     $.post(form.attr('action'), form.serialize(), function(res) {
@@ -29,16 +31,19 @@
                         get_total_amount();
                         return false;
                     });
-                 
                 })
+
+                /* deletes the item on the user's cart */
                 $(document).on('click','a.del',function(event){
                     console.log($(this).attr('href'));
                     $.get($(this).attr('href'),function(res){
                         $('#list-items').html(res);
+                        get_total_amount();
                     })
                     event.preventDefault();
                 })
 
+                /* submit the checkout form */
                 $('#checkout-form').submit(function(){
                     console.log($(this).attr('action'));
                     $.post($(this).attr('action'),$(this).serialize(),function(res){
@@ -54,7 +59,8 @@
                 })
             })
             function get_total_amount(){
-                $.get('/products/get_total_amount',function(res){
+                /* renders on UI the order summary details udpates */
+                $.get('/cart/get_total_amount',function(res){
                     console.log(res);
                     $('#total_amount').val(res);
                     $('#p-total-amount').html('$'+res);

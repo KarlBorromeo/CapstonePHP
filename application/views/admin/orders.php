@@ -13,14 +13,33 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
-                // $(document).on('change','.select-status' function(){})
+
+                /* update the order status realtime */
                 $(document).on('change','.select-status',function(){
                     form = $(this).closest('form');
                     $.post(form.attr('action'),form.serialize(),function(res){
-                        console.log(res);
                         return false;
                     })
                 })
+
+                /* get the orders by categories */
+                $('#categories li a').on('click',function(event){
+                    console.log($(this).attr('href'));
+                    $.get($(this).attr('href'),function(res){
+                        $('tbody').html(res);
+                    })
+                    event.preventDefault();
+                })
+
+                /* search result */
+                $('#search-input').on('input',function(){
+                    console.log('res');
+                    var form = $(this).parent();
+                    $.post(form.attr('action'),form.serialize(),function(res){
+                        $('tbody').html(res);
+                    })                        
+                })
+                
             })
         </script>
     </head>
@@ -30,32 +49,42 @@
             <?php $this->load->view('admin/widgets/header.php') ?>
             <h2>Order</h2>
             <main>
-                <form action="#" method="POST" class="mb-3">
-                    <input type="text" name="search" placeholder="Search Orders">
+                <form action="/admin/search_order_id" method="POST" class="mb-3">
+                    <input id="search-input" type="text" name="search" placeholder="Search Order ID">
                     <button type="submit"><img src="../../../assets/images/search.svg"></button>
                 </form>
                 <div class="d-flex gap-4">
                     <ul id="categories">
                         <h5>Categories</h5>
                         <li>
-                            <img src="../../../assets/images/all_orders_icon.svg">
-                            <p>All Order</p>
+                            <a href="/admin/all_orders_categorized/">
+                                <img src="../../../assets/images/all_orders_icon.svg">
+                                <p>All Order</p>                                
+                            </a>
                         </li>
                         <li id="pending">
-                            <img src="../../../assets/images/pending_icon.svg">
-                            <p>Pending</p>
+                            <a href="/admin/all_orders_categorized/pending">
+                                <img src="../../../assets/images/pending_icon.svg">
+                                <p>Pending</p>
+                            </a>
                         </li>
                         <li>
-                            <img src="../../../assets/images/on_process_icon.svg">
-                            <p>On-Process</p>
+                            <a href="/admin/all_orders_categorized/on_process">
+                                <img src="../../../assets/images/on_process_icon.svg">
+                                <p>On-Process</p>
+                            </a>
                         </li>
                         <li >
-                            <img src="../../../assets/images/shipped_icon.svg">
-                            <p>Shipped</p>
+                            <a href="/admin/all_orders_categorized/shipped">
+                                <img src="../../../assets/images/shipped_icon.svg">
+                                <p>Shipped</p>
+                            </a>
                         </li>
                         <li id="delivered">
-                            <img src="../../../assets/images/delivered_icon.svg">
-                            <p>Delivered</p>
+                            <a href="/admin/all_orders_categorized/delivered">
+                                <img src="../../../assets/images/delivered_icon.svg">
+                                <p>Delivered</p>
+                            </a>
                         </li>
                     </ul>
                     <section id="all-orders">
@@ -71,25 +100,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr>
-                                    <td class="order-id" >123</td>
-                                    <td>09-06-2022</td>
-                                    <td class="receiver">
-                                        <p class="highlight">Charlene Flora</p>
-                                        <p>123 Dojo, Bieleve Samle Place</p>
-                                    </td>
-                                    <td class="highlight">$10</td>
-                                    <td>
-                                        <form action="#" method="POST">
-                                            <select class="highlight">
-                                                <option>Pending</option>
-                                                <option>On-Process</option>
-                                                <option>Shipped</option>
-                                                <option>Delivered</option>
-                                            </select>                                            
-                                        </form>
-                                    </td>
-                                </tr> -->
 <?php 
     foreach($orders as $order){
 ?>
@@ -105,7 +115,7 @@
                                         <form action="/admin/order_update/<?=  $order['id'] ?>" method="POST">
                                             <select class="select-status" class="highlight" name="status">
                                                 <option <?= ($order['status'] == 'pending')?'selected':'' ?> value="pending" >Pending</option>
-                                                <option <?= ($order['status'] == 'on-process')?'selected':'' ?> value="on-process" >On-Process</option>
+                                                <option <?= ($order['status'] == 'on_process')?'selected':'' ?> value="on_process" >On-Process</option>
                                                 <option <?= ($order['status'] == 'shipped')?'selected':'' ?> value="shipped" >Shipped</option>
                                                 <option <?= ($order['status'] == 'delivered')?'selected':'' ?> value="delivered" >Delivered</option>
                                             </select>                                            

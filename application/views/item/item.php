@@ -14,21 +14,34 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
+
+                get_count_items();
+
+                /* updates the total amount */
                 $('#quantity').change(function(){
                     $.post($(this).parent().attr('action'),$(this).parent().serialize(),function(res){
                         $('#total_amount').val(res);
                         $('#quantity_addcart').val($('#quantity').val());
                     });
                 })
+
+                /* add to cart */
                 $('#add-cart').submit(function(res){
-                    $.post($(this).attr('action'),$(this).serialize(),function(res){
-                        console.log(res);
+                    $.post($(this).attr('action'),$(this).serialize(),function(){
+                        get_count_items();
                         $('#modal-bg').show();
                         setTimeout(function(){$('#modal-bg').hide()}, 300);
                     })
                     return false;
                 })
             })
+            function get_count_items()
+            {
+                 /* get the count of items in user's cart */
+                 $.get('/products/cart_count_getter',function(res){
+                    $('span#count').html(res);
+                })
+            }
         </script>
     </head>
     <body class="d-flex">
@@ -41,9 +54,9 @@
                         <input type="text" name="search" placeholder="Search Products" class="border">
                         <button type="submit"><img src="../../assets/images/search.svg"></button>                        
                     </div>
-                    <a href="/products/cart" class="btn btn-primary p-3"><img src="../../assets/images/cart.svg"> Cart(0)</a>
+                    <a href="/cart" class="btn btn-primary p-3"><img src="../../assets/images/cart.svg"> Cart ( <span id="count"></span> )</a>
                 </form>
-                <a href="#" class="d-flex align-items-center gap-3 mb-4 fw-semibold"><img src="../../../assets/images/left.svg"> Go Back</a>
+                <a href="/products" class="d-flex align-items-center gap-3 mb-4 fw-semibold"><img src="../../../assets/images/left.svg"> Go Back</a>
                 <div class="d-flex bg-white">
                     <section id="item-images">
                         <img src="../../../assets/uploads/<?= $product['images']['img'][$main_index] ?>">
@@ -88,74 +101,32 @@
                 </div>
                 <ul id="products" class="mt-5">
                     <p class="fw-semibold">Similar Items</p>
+<?php
+    foreach($similar_products as $product){
+        $main_index = $product['images']['main_img'];
+?>
                     <li>
-                        <img src="../../assets/images/food.png">
-                        <div>
-                            <p>Vegetable<p>
-                            <section>
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_empty.png">
-                                <p>36 Rating</p>
-                            </section>
-                            <span class="text-primary fw-semibold">
-                                $10
-                            </span>
-                        </div>
+                        <a href="/products/item/<?= $product['id'] ?>">
+                            <img src="../../assets/uploads/<?= $product['images']['img'][$main_index] ?>">
+                            <div>
+                                <p><?= $product['name'] ?><p>
+                                <section>
+                                    <img src="../../assets/images/star_shade.png">
+                                    <img src="../../assets/images/star_shade.png">
+                                    <img src="../../assets/images/star_shade.png">
+                                    <img src="../../assets/images/star_shade.png">
+                                    <img src="../../assets/images/star_empty.png">
+                                    <p>36 Rating</p>
+                                </section>
+                                <span class="text-primary fw-semibold">
+                                <?= $product['price'] ?>
+                                </span>
+                            </div>
+                        </a>
                     </li>
-                    <li>
-                        <img src="../../assets/images/food.png">
-                        <div>
-                            <p>Vegetable<p>
-                            <section>
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_empty.png">
-                                <p>36 Rating</p>
-                            </section>
-                            <span class="text-primary fw-semibold">
-                                $10
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="../../assets/images/food.png">
-                        <div>
-                            <p>Vegetable<p>
-                            <section>
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_empty.png">
-                                <p>36 Rating</p>
-                            </section>
-                            <span class="text-primary fw-semibold">
-                                $10
-                            </span>
-                        </div>
-                    </li>
-                    <li>
-                        <img src="../../assets/images/food.png">
-                        <div>
-                            <p>Vegetable<p>
-                            <section>
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_shade.png">
-                                <img src="../../assets/images/star_empty.png">
-                                <p>36 Rating</p>
-                            </section>
-                            <span class="text-primary fw-semibold">
-                                $10
-                            </span>
-                        </div>
-                    </li>
+<?php
+    }
+?>
                 </ul>
             </main>
         </div>
@@ -164,7 +135,6 @@
                 Item Added to Cart
             </section>              
         </div>
-     
     </body>
 
 </html>

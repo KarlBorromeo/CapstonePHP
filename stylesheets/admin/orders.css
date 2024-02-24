@@ -66,6 +66,9 @@ main > form button{
 #categories li:hover{
     outline: 2px solid #7971D9;
 }
+#categories li a{
+    text-decoration: none;
+}
 #categories li p{
     font-size: small;
     margin-top: .5rem;

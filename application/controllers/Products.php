@@ -2,12 +2,24 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Products extends CI_Controller{
     private $shippingFee;
-
+    private $cart_items_count;
     public function __construct()
     {
         parent::__construct();
         $this->shippingFee = 10;
         $this->load->model('product');
+        if($this->session->userdata('user')){
+            $cart = $this->product->fetch_cart($this->session->userdata('user')['id']);
+            $this->cart_items_count = count($cart['cart']);
+        }else{
+            $this->cart_items_count = 0;
+        }
+    }
+
+    /* returns the count of items on the user's cart */
+    public function cart_count_getter()
+    {
+        echo $this->cart_items_count;
     }
     
     /* return the shipping fee */
@@ -15,17 +27,40 @@ class Products extends CI_Controller{
     {
         echo $this->shippingFee;
     }
+
     public function index()
     {
+        $this->load->view('home');
+    }
+
+    /* render the product list on the partials */
+    public function render_all_product()
+    {
         $products = $this->product->fetch_all_product();
-        $this->load->view('home',array('products'=>$products));
+        $this->load->view('partials/client_product_list',array('products'=>$products));
+    }
+
+    /* fetch all filtered category product and render on partials*/
+    public function all_products_categorized($category='')
+    {
+        $products = $this->product->fetch_all_product($category);
+        $this->load->view('partials/client_product_list',array('products'=>$products));
+    }
+
+    /* search the name of the product and render to paritals the results */
+    public function search_product()
+    {
+        $products = $this->product->search_product($this->input->post('search'));
+        $this->load->view('partials/client_product_list',array('products'=>$products));
+        // $this->load->view('home',array('products'=>$products,'cart_item_count'=>$this->cart_items_count));
     }
 
     /* fetch details of specific product*/
     public function item($product_id)
     {
         $product = $this->product->fetch_one_product($product_id);
-        $this->load->view('item/item',array('product'=>$product,'main_index'=>$product['images']['main_img']));
+        $similar_products = $this->product->fetch_all_product($product['category']);
+        $this->load->view('item/item',array('product'=>$product,'main_index'=>$product['images']['main_img'],'similar_products'=>$similar_products));
     }
 
     /* update the total_amount pre checkout */
@@ -49,53 +84,6 @@ class Products extends CI_Controller{
                             'pieces' => $this->input->post('quantity'),
                             'total' => $this->calc_total_precart());                
             $this->product->add_cart($details); 
-        }else{
-            redirect('/auth/login');
-        }
-    }
-
-    /* fetch the items of the cart*/
-    public function cart(){
-        if($this->session->userdata('user')){
-            $this->load->view('cart/cart',array('firstname'=>$this->session->userdata('user')['firstname'],'lastname'=>$this->session->userdata('user')['lastname']));
-        }else{
-            redirect('/auth/login');
-        }
-    }
-
-    /* remove item in cart */
-    public function remove_item($cart_id)
-    {
-        if($this->session->userdata('user')){
-            $this->product->remove_item($cart_id);
-            $this->feth_cart_details();
-        }else{
-            redirect('/auth/login');
-        }
-    }
-
-    /* fetch the cart items and calculate total */
-    public function feth_cart_details()
-    {
-        $user_id = $this->session->userdata('user')['id'];
-        $response = $this->product->fetch_cart($user_id);
-        $this->load->view('partials/cart_list',array('cart'=>$response['cart']));
-    }
-
-    /* get the updated total of cart items */
-    public function get_total_amount()
-    {
-        $user_id = $this->session->userdata('user')['id'];
-        $response = $this->product->fetch_cart($user_id);
-        echo $response['total_amount'];
-    }
-
-    /* update the items of the cart */
-    public function update_cart_item($cart_id)
-    {
-        if($this->session->userdata('user')){
-            $this->product->update_item($cart_id);
-            $this->feth_cart_details();
         }else{
             redirect('/auth/login');
         }

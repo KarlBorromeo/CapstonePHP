@@ -2,9 +2,22 @@
 
 class Product extends CI_Model{
     /* fetch reqeust for all products */
-    public function fetch_all_product()
+    public function fetch_all_product($category = '')
     {
-        $response =  $this->db->query('SELECT * FROM products')->result_array();
+        $query = "SELECT * FROM products ". ($category != '' ? "WHERE category = ?":'');
+        $response =  $this->db->query($query,array($category))->result_array();
+        $products = array();
+        foreach($response as $res){
+            $res['images'] = json_decode($res['images'],true);
+            $products[] = $res;
+        }
+        return $products;
+    }
+
+    /* search product name */
+    public function search_product($search)
+    {
+        $response = $this->db->query("SELECT * FROM products WHERE name LIKE '{$search}%'")->result_array();
         $products = array();
         foreach($response as $res){
             $res['images'] = json_decode($res['images'],true);
@@ -80,7 +93,7 @@ class Product extends CI_Model{
     }
 
     /* validate checkout form */
-    public function validate_checkout(){
+    public function validate_checkout($shippingFee){
         $this->load->library('form_validation');
         $this->form_validation->set_rules('firstname','Firstname','required|alpha');
         $this->form_validation->set_rules('lastname','Lastname','required|alpha');
@@ -91,7 +104,7 @@ class Product extends CI_Model{
         if($this->form_validation->run()){
             $cart_details = $this->fetch_cart($this->session->userdata('user')['id']);
             $cart_items = $cart_details['cart'];
-            $total_amount = $cart_details['total_amount'];
+            $total_amount = $cart_details['total_amount'] + $shippingFee;
             $payload= array('total_amount' => $total_amount,
                             'firstname' => $this->input->post('firstname'),
                             'lastname' => $this->input->post('lastname'),

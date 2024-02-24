@@ -119,3 +119,33 @@
     right: 0;
     scale: .5;
 }
+/* #categories img{
+    display: block;
+} */
+#categories li{
+    font-size: small;
+    margin: 0;
+    display: block;
+    padding: 1rem;
+    margin-bottom: .5rem;
+    border-radius: 1rem;
+    background-color: rgb(44,47,65);
+    transition: all .3s ease-in-out;
+}
+#categories li a{
+    text-decoration: none;
+    color: white;
+}
+#categories li:hover{
+    box-shadow: 0px 3.17949px 11.9231px rgba(156, 137, 255, 0.45)
+}
+#categories li img{
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+}
+#edit-container{
+    position: absolute;
+}
