@@ -40,6 +40,16 @@
                     })
                     return false;
                 })
+
+                /* pagination */
+                $(document).on('click','.pagination',function(event){
+                    console.log($(this).attr('href'));
+                    $.get($(this).attr('href'),function(res){
+                        $('#products').html(res);
+                    })
+                    event.preventDefault();
+                })
+        
             })
         </script>
     </head>
@@ -58,7 +68,7 @@
                 <div class="d-flex">           
                     <ol id="categories">
                         <h4>Categories</h4>
-                        <li class="text-center"><a href="/products/all_products_categorized/"><img src="../../assets/images/all_products.png">All Products</a></li>
+                        <li class="text-center"><a href="/products/render_all_product"><img src="../../assets/images/all_products.png">All Products</a></li>
                         <li class="text-center"><a href="/products/all_products_categorized/vegetable"><img src="../../assets/images/Vegetables.png">Vegetables</a></li>
                         <li class="text-center"><a href="/products/all_products_categorized/fruits"><img src="../../assets/images/Fruits.png">Fruits</a></li>
                         <li class="text-center"><a href="/products/all_products_categorized/meat"><img src="../../assets/images/Meat.png">Meat</a></li>

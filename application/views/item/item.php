@@ -34,6 +34,22 @@
                     })
                     return false;
                 })
+
+                /* get the category of the current item */
+                /* get the list of similar items by category */
+                category = $('#item-category').val();
+                $.get(`/products/all_products_categorized/${category}`,function(res){
+                    $('#products').html(res);
+                })
+
+                /* pagination */
+                $(document).on('click','.pagination',function(event){
+                    console.log($(this).attr('href'));
+                    $.get($(this).attr('href'),function(res){
+                        $('#products').html(res);
+                    })
+                    event.preventDefault();
+                })
             })
             function get_count_items()
             {
@@ -92,41 +108,14 @@
                             <input id="total_amount" type="text" value="<?= $product['price'] ?>" disabled class="text-primary fw-semibold border">  
                         </label>
                         <form id="add-cart" action="/products/add_cart" method="POST">
-                            
+                            <input type="hidden" value="<?= $product['category'] ?>" id="item-category">
                             <input type="hidden" value="<?= $product['id'] ?>" name="product_id">
                             <input id="quantity_addcart" type="hidden" name="quantity" min="1" value="1" class="border"> 
                             <button  type="submit" class="btn btn-outline-primary"><img src="../../assets/images/cart.svg">Add to Cart</button>                            
-                        </form>
+                        </form>                       
                     </section>
                 </div>
                 <ul id="products" class="mt-5">
-                    <p class="fw-semibold">Similar Items</p>
-<?php
-    foreach($similar_products as $product){
-        $main_index = $product['images']['main_img'];
-?>
-                    <li>
-                        <a href="/products/item/<?= $product['id'] ?>">
-                            <img src="../../assets/uploads/<?= $product['images']['img'][$main_index] ?>">
-                            <div>
-                                <p><?= $product['name'] ?><p>
-                                <section>
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_shade.png">
-                                    <img src="../../assets/images/star_empty.png">
-                                    <p>36 Rating</p>
-                                </section>
-                                <span class="text-primary fw-semibold">
-                                <?= $product['price'] ?>
-                                </span>
-                            </div>
-                        </a>
-                    </li>
-<?php
-    }
-?>
                 </ul>
             </main>
         </div>

@@ -1,13 +1,19 @@
-                        <h4>All Products(<?= count($products) ?>)</h4>
+                        <h4 class="text-capitalize"><?= (isset($category)?$category:'All') ?> Products(<?= count($products) ?>)</h4>
 <?php
-    foreach($products as $product){
-        $main_index = $product['images']['main_img'];
+    $maxitems = 8;
+    $start = ($start_index-1) * $maxitems ;
+    $end = $start + $maxitems ;
+    if($end > count($products)){
+        $end = count($products);
+    }
+    for($i = $start; $i < $end; $i++){
+        $main_index = $products[$i]['images']['main_img'];
 ?>
                         <li>
-                            <a href="/products/item/<?= $product['id'] ?>">
-                                <img src="../../assets/uploads/<?= $product['images']['img'][$main_index] ?>">
+                            <a href="/products/item/<?= $products[$i]['id'] ?>">
+                                <img src="../../assets/uploads/<?= $products[$i]['images']['img'][$main_index] ?>">
                                 <div>
-                                    <p><?= $product['name'] ?><p>
+                                    <p><?= $products[$i]['name'] ?><p>
                                     <section>
                                         <img src="../../assets/images/star_shade.png">
                                         <img src="../../assets/images/star_shade.png">
@@ -17,11 +23,33 @@
                                         <p>36 Rating</p>
                                     </section>
                                     <span class="text-primary fw-semibold">
-                                    <?= $product['price'] ?>
+                                    <?= $products[$i]['price'] ?>
                                     </span>
                                 </div>
                             </a>
                         </li>
 <?php
     }
+    $num_pages = 1;
+    $list_length = count($products);
+    if($list_length > $maxitems ){
+        $num_pages = $list_length / $maxitems ;
+        if($list_length%$maxitems  != 0){
+            $num_pages++;
+        }
+    }if($num_pages > 1){
 ?>
+                        <div class="d-flex gap-3 border">
+<?php
+    
+        for($i = 1; $i <= $num_pages; $i++){
+?>      
+                            <a class="pagination" href="/products/<?= $method?><?=(isset($category)?'/'.$category:'')?>/<?=$i ?>" class="border p-3"><?= $i ?></a>
+<?php
+        }
+?>
+                        </div>
+<?php
+    }
+?>
+            

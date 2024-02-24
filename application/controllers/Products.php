@@ -34,33 +34,32 @@ class Products extends CI_Controller{
     }
 
     /* render the product list on the partials */
-    public function render_all_product()
+    public function render_all_product($start = 1)
     {
         $products = $this->product->fetch_all_product();
-        $this->load->view('partials/client_product_list',array('products'=>$products));
+        $this->load->view('partials/client_product_list',array('products' => $products,'start_index' => $start,'method' => 'render_all_product'));
     }
 
     /* fetch all filtered category product and render on partials*/
-    public function all_products_categorized($category='')
+    public function all_products_categorized($category='',$start = 1)
     {
         $products = $this->product->fetch_all_product($category);
-        $this->load->view('partials/client_product_list',array('products'=>$products));
+        $this->load->view('partials/client_product_list',array('products' => $products,'start_index' => $start,'method' => 'all_products_categorized','category' => $category));
     }
 
     /* search the name of the product and render to paritals the results */
-    public function search_product()
+    public function search_product($start = 1)
     {
         $products = $this->product->search_product($this->input->post('search'));
-        $this->load->view('partials/client_product_list',array('products'=>$products));
-        // $this->load->view('home',array('products'=>$products,'cart_item_count'=>$this->cart_items_count));
+        $this->load->view('partials/client_product_list',array('products' => $products,'start_index' => $start,'method' => 'search_product'));
     }
 
     /* fetch details of specific product*/
     public function item($product_id)
     {
         $product = $this->product->fetch_one_product($product_id);
-        $similar_products = $this->product->fetch_all_product($product['category']);
-        $this->load->view('item/item',array('product'=>$product,'main_index'=>$product['images']['main_img'],'similar_products'=>$similar_products));
+        // $similar_products = $this->product->fetch_all_product($product['category']);
+        $this->load->view('item/item',array('product'=>$product,'main_index'=>$product['images']['main_img']));
     }
 
     /* update the total_amount pre checkout */
