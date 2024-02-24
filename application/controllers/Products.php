@@ -38,7 +38,7 @@ class Products extends CI_Controller{
     public function all_products_uncategorized($start = 1)
     {
         $products = $this->product->fetch_all_product();
-        $this->load->view('partials/client_product_list',array('products' => $products,'start_index' => $start,'method' => 'render_all_product'));
+        $this->load->view('partials/client_product_list',array('products' => $products,'start_index' => $start,'method' => 'all_products_uncategorized'));
     }
 
     /* fetch all filtered category product and render on partials*/

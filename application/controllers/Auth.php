@@ -50,7 +50,15 @@ class Auth extends CI_Controller {
 	}
 
 	/* log out */
-	public function logout(){
+	public function logout()
+	{
+		$this->session->unset_userdata('user');
+		redirect('/auth');
+	}
+
+	/* from admin page, switch to products clients */
+	public function switch()
+	{
 		$this->session->unset_userdata('user');
 		redirect('/products');
 	}

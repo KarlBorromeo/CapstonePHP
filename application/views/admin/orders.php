@@ -16,7 +16,7 @@
 
                 /* fetch all uncategorized orders intially */
                 $.get('admin/all_orders_uncategorized',function(res){
-                    $('tbody').html(res);
+                    $('#all-orders').html(res);
                 })
 
                 /* update the order status realtime */
@@ -31,7 +31,7 @@
                 $('#categories li a').on('click',function(event){
                     console.log($(this).attr('href'));
                     $.get($(this).attr('href'),function(res){
-                        $('tbody').html(res);
+                        $('#all-orders').html(res);
                     })
                     event.preventDefault();
                 })
@@ -41,7 +41,7 @@
                     console.log('res');
                     var form = $(this).parent();
                     $.post(form.attr('action'),form.serialize(),function(res){
-                        $('tbody').html(res);
+                        $('#all-orders').html(res);
                     })                    
                 })
 
@@ -49,7 +49,7 @@
                 $(document).on('click','.pagination',function(event){
                     console.log($(this).attr('href'));
                     $.get($(this).attr('href'),function(res){
-                        $('tbody').html(res);
+                        $('#all-orders').html(res);
                     })
                     event.preventDefault();
                 })
@@ -101,21 +101,7 @@
                             </a>
                         </li>
                     </ul>
-                    <section id="all-orders">
-                        <h5>All Orders (36)</h5>
-                        <table>                     
-                            <thead> 
-                                <tr>
-                                    <th>Order ID #</th>
-                                    <th>Order Date</th>
-                                    <th class="receiver">Receiver</th>
-                                    <th>Total Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>                        
+                    <section id="all-orders">                     
                     </section>
                 </div>
             </main>

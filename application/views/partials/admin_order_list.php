@@ -1,3 +1,16 @@
+                        <h5>All Orders (<?= count($orders) ?>)</h5>
+                        <table>                     
+                            <thead> 
+                                <tr>
+                                    <th>Order ID #</th>
+                                    <th>Order Date</th>
+                                    <th class="receiver">Receiver</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
 <?php 
     /* creating a maximum at $maxitems items on current page */
     /* intializing the start and end of every page */
@@ -41,19 +54,21 @@
         }
     }if($num_pages > 1){
 ?>
-                        <tr class="d-flex gap-3" id="pagination-container">
+                                <tr class="d-flex gap-3" id="pagination-container">
 <?php
                         /* method is the refence for the method to be called when the acnhor is clicked */
                         /* putting the category on the href if the current list is filtered by status ,else no status  on anchor href */
         for($i = 1; $i <= $num_pages; $i++){
 ?>      
-                            <td>
-                                <a class="pagination" href="/admin/<?= $method ?><?= ((isset($status))?'/'.$status:'')?>/<?=$i ?>"><?= $i ?></a>       
-                            </td>
+                                    <td>
+                                        <a class="pagination" href="/admin/<?= $method ?><?= ((isset($status))?'/'.$status:'')?>/<?=$i ?>"><?= $i ?></a>       
+                                    </td>
 <?php
         }
 ?>
-                        </tr>
+                                </tr>
 <?php
     }
-?>
+?>              
+                            </tbody>
+                        </table> 

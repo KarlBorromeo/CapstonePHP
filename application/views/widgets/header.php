@@ -20,6 +20,7 @@
 <?php
     if($this->session->userdata('user')){
 ?>
+            <li><?= $this->session->userdata('user')['firstname'].' '.$this->session->userdata('user')['lastname'] ?></li>
             <li><a href="/auth/logout" class="btn btn-primary">Logout</a></li>
 <?php
     }else{

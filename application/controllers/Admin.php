@@ -92,8 +92,7 @@ class Admin extends CI_Controller{
     public function delete_product($product_id)
     {
         $this->adminmodel->delete_product($product_id);
-        $products = $this->product->fetch_all_product();
-        $this->load->view('partials/admin_product_list',array('products'=>$products));
+        $this->all_product_uncategorized();
     }
 
     /* fetch specific product details */

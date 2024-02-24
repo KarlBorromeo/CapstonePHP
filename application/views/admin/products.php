@@ -50,10 +50,13 @@
                 })
 
                 /* delete the product */
-                $(document).on('click','.delete-product',function(even){
-                    $.get($(this).attr('href'),function(res){
-                        $('tbody').html(res);
-                    })
+                $(document).on('click','.delete',function(even){
+                    confirmed = confirm('Are you sure to Delete this product?');
+                    if(confirmed){
+                        $.get($(this).attr('href'),function(res){
+                            $('tbody').html(res);
+                        })                        
+                    }
                     event.preventDefault();
                 })
 
@@ -111,7 +114,7 @@
                 <div class="d-flex gap-4">
                     <ol id="categories">
                         <h4>Categories</h4>
-                        <li class="text-center"><a class="categories" href="/admin/all_products_categorized/"><img src="../../assets/images/all_products.png">All Products</a></li>
+                        <li class="text-center"><a class="categories" href="/admin/all_product_uncategorized/"><img src="../../assets/images/all_products.png">All Products</a></li>
                         <li class="text-center"><a class="categories" href="/admin/all_products_categorized/vegetables"><img src="../../assets/images/Vegetables.png">Vegetables</a></li>
                         <li class="text-center"><a class="categories" href="/admin/all_products_categorized/fruits"><img src="../../assets/images/Fruits.png">Fruits</a></li>
                         <li class="text-center"><a class="categories" href="/admin/all_products_categorized/meat"><img src="../../assets/images/Meat.png">Meat</a></li>

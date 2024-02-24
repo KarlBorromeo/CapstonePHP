@@ -13,7 +13,7 @@
     </head>
     <aside>
         <div class="border border-top-0 border-end-0 border-start-0 text-center">
-            <a href="#"><img src="../../../../assets/images/organic_shop_logo_large.svg"></a>
+            <img src="../../../../assets/images/organic_shop_logo_large.svg">
         </div>
         <ul>
             <li><a href="/admin" class="d-flex align-items-center gap-2 fw-semibold"><img src="../../../../assets/images/product_figma.svg">Orders</a></li>
