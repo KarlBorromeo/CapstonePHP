@@ -59,6 +59,9 @@
                             <input id="img_create_upload" class="form-control" type="file" id="formFileMultiple" multiple name="images[]">
                         </div>
                         <div class="modal-footer">
+                            <label id="csrf">
+                                <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>">
+                            </label>
                             <input type="hidden" value="<?= $product['id'] ?>" name="product_id">
                             <button type="button" class="btn btn-danger" id="cancel-edit-btn">Cancel</button>
                             <button type="submit" class="btn btn-primary">Save Changes</button>

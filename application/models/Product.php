@@ -94,18 +94,30 @@ class Product extends CI_Model{
 
     /* validate checkout form */
     public function validate_checkout($shippingFee){
+        $cart = $this->fetch_cart($this->session->userdata('user')['id']);
+        if(count($cart['cart']) < 1){
+            return array('error' => 'Empty Cart, Please add to cart first');
+        }
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('firstname','Firstname','required|alpha');
-        $this->form_validation->set_rules('lastname','Lastname','required|alpha');
-        $this->form_validation->set_rules('address','Address','required');
-        $this->form_validation->set_rules('city','City','required');
-        $this->form_validation->set_rules('state','State','required');
-        $this->form_validation->set_rules('zip-code','ZIP Code','required|numeric');
+        $this->form_validation->set_rules('firstname','Firstname Shipping','required|alpha');
+        $this->form_validation->set_rules('lastname','Lastname Shipping','required|alpha');
+        $this->form_validation->set_rules('address','Address Shipping','required');
+        $this->form_validation->set_rules('city','City Shipping','required');
+        $this->form_validation->set_rules('state','State Shipping','required');
+        $this->form_validation->set_rules('zip-code','ZIP Code Shipping','required|numeric');
+        if(!$this->input->post('same-billing-shipping')){
+            $this->form_validation->set_rules('firstname-billing','Firstname Billing','required|alpha');
+            $this->form_validation->set_rules('lastname-billing','Lastname Billing','required|alpha');
+            $this->form_validation->set_rules('address-billing','Address Billing','required');
+            $this->form_validation->set_rules('city-billing','City Billing','required');
+            $this->form_validation->set_rules('state-billing','State Billing','required');
+            $this->form_validation->set_rules('zip-code-billing','ZIP Code Billing','required|numeric');
+        }
         if($this->form_validation->run()){
             $cart_details = $this->fetch_cart($this->session->userdata('user')['id']);
             $cart_items = $cart_details['cart'];
             $total_amount = $cart_details['total_amount'] + $shippingFee;
-            $payload= array('total_amount' => $total_amount,
+            $payload = array('total_amount' => $total_amount,
                             'firstname' => $this->input->post('firstname'),
                             'lastname' => $this->input->post('lastname'),
                             'address' => $this->input->post('address'),
@@ -113,7 +125,27 @@ class Product extends CI_Model{
                             'city' => $this->input->post('city'),
                             'state' => $this->input->post('state'),
                             'zip-code' => $this->input->post('zip-code'),
-                            'order-items' => json_encode($cart_items));
+                            'order-items' => json_encode($cart_items),
+                            'billing-information' => NULL);
+            if(!$this->input->post('same-billing-shipping')){
+                $payload['billing-information'] = json_encode(array(
+                            'firstname' => $this->input->post('firstname-billing'),
+                            'lastname' => $this->input->post('lastname-billing'),
+                            'address' => $this->input->post('address-billing'),
+                            'address2' => $this->input->post('address2-billing'),
+                            'city' => $this->input->post('city-billing'),
+                            'state' => $this->input->post('state-billing'),
+                            'zip-code' => $this->input->post('zip-code-billing')));
+            }else{
+                $payload['billing-information'] = json_encode(array(
+                            'firstname' => $this->input->post('firstname'),
+                            'lastname' => $this->input->post('lastname'),
+                            'address' => $this->input->post('address'),
+                            'address2' => $this->input->post('address2'),
+                            'city' => $this->input->post('city'),
+                            'state' => $this->input->post('state'),
+                            'zip-code' => $this->input->post('zip-code')));
+            }
             return $payload;
         }else{
             return  array('error' => validation_errors(' ', ' '));
@@ -121,10 +153,13 @@ class Product extends CI_Model{
     }
 
     /* add order*/
-    public function add_order($payload)
+    public function add_order($payload,$user_id)
     {
-        $this->db->query('INSERT INTO orders(total_amount,firstname,lastname,address,address2,city,state,zip_code,order_items) 
-                        VALUES(?,?,?,?,?,?,?,?,?)',$payload);
+        $this->db->query('INSERT INTO orders(total_amount,firstname,lastname,address,address2,city,state,zip_code,order_items,billing_information) 
+                        VALUES(?,?,?,?,?,?,?,?,?,?)',$payload);
+
+        /* removes the cart items of the users after succesfull checkout payment */
+        $this->db->query('DELETE FROM cart_items WHERE users_id = ?',array($user_id));
     }
 }
 ?>

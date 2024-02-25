@@ -14,6 +14,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
+
+                /* initialize to consider same information the biling and shipping */
+                if($('#same-billing-shipping').is(':checked')){
+                    $('#billing').hide();
+                }
+
                 /* get all the list of items in user's cart */
                 $.get('/cart/feth_cart_details',function(res){
                     console.log(res);
@@ -55,6 +61,15 @@
                     })
                     return false;
                 })
+
+                /* toggle shipping billing comparison */
+                $('#same-billing-shipping').change(function(){
+                    if($(this).is(':checked')){
+                        $('#billing').hide(); 
+                    }else{
+                        $('#billing').show();
+                    }
+                })
             })
             function get_total_amount(){
                 /* renders on UI the order summary details udpates */
@@ -75,16 +90,17 @@
         <div class="border">
             <?php $this->load->view('widgets/header'); ?>
             <main>
-                <form action="" method="POST" id="search-form" class="mb-5">
-                    <div class="border border-top-0 border-start-0 border-bottom-0">
-                        <input type="text" name="search" placeholder="Search Products" class="border">
-                        <button type="submit"><img src="../../assets/images/search.svg"></button>                        
-                    </div>
-                </form>
                 <div class="d-flex gap-5">
                     <ul id="list-items">
                     </ul>
                     <form id="checkout-form" action="/checkout/checkout_now" method="POST">
+                        <div class="d-flex justify-content-between">
+                            <h5>Shipping Information</h5>
+                            <label>
+                                <input type="checkbox" checked name="same-billing-shipping" id="same-billing-shipping">
+                                Same in Billing
+                            </label>
+                        </div>
                         <div class="row">
                             <div class="form-floating mb-3 col-6">
                                 <input  type="text" class="form-control" id="firstname" placeholder="" name="firstname" value="<?= $firstname ?>">
@@ -117,6 +133,44 @@
                                 <label for="zip-code">Zip Code</label>
                             </div>
                         </div>
+                        <!-- Billing information -->
+                        <div id="billing">
+                            <h5>Billing Information</h5>
+                            <div class="row">
+                                <div class="form-floating mb-3 col-6">
+                                    <input  type="text" class="form-control" id="firstname-billing" placeholder="" name="firstname-billing">
+                                    <label for="firstname-billing">Firstname</label>
+                                </div>
+                                <div class="form-floating mb-3 col-6">
+                                    <input  type="text" class="form-control" id="lastname-billing" placeholder="" name="lastname-billing">
+                                    <label for="lastname-billing">Lastname</label>
+                                </div>
+                            </div> 
+                            <div class="form-floating mb-3 col-12">
+                                <input  type="text" class="form-control" id="address-billing" placeholder="" name="address-billing">
+                                <label for="address-billing">Address</label>
+                            </div>
+                            <div class="form-floating mb-3 col-12">
+                                <input type="text" class="form-control" id="address2-billing" placeholder="" name="address2-billing">
+                                <label for="address2-billing">Address 2</label>
+                            </div>
+                            <div class="row">
+                                <div class="form-floating mb-3 col-4">
+                                    <input  type="text" class="form-control" id="city-billing" placeholder="" name="city-billing">
+                                    <label for="city-billing">City</label>
+                                </div>
+                                <div class="form-floating mb-3 col-4">
+                                    <input  type="text" class="form-control" id="state-billing" placeholder="" name="state-billing">
+                                    <label for="state-billing">State</label>
+                                </div>
+                                <div class="form-floating mb-3 col-4">
+                                    <input  type="number" class="form-control" id="zip-code-billing" placeholder="" name="zip-code-billing">
+                                    <label for="zip-code-billing">Zip Code</label>
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <!-- Summary -->
                         <p>Order Summary</p>
                         <section class="d-flex justify-content-between">
                             <p>Items</p>

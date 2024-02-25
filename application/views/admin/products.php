@@ -17,13 +17,13 @@
 
                 /* fetch all products under all categories*/
                 $.get('/admin/all_product_uncategorized',function(res){
-                    $('tbody').html(res);
+                    $('#products').html(res);
                 })
 
                 /* fetch products by categories*/
                 $('.categories').click(function(event){
                     $.get($(this).attr('href'),function(res){
-                        $('tbody').html(res);
+                        $('#products').html(res);
                     })
                     event.preventDefault();
                 })
@@ -54,7 +54,7 @@
                     confirmed = confirm('Are you sure to Delete this product?');
                     if(confirmed){
                         $.get($(this).attr('href'),function(res){
-                            $('tbody').html(res);
+                            $('#products').html(res);
                         })                        
                     }
                     event.preventDefault();
@@ -82,7 +82,7 @@
                 $('#search-input').on('input',function(){
                     var form = $(this).closest('form');
                     $.post(form.attr('action'),form.serialize(),function(res){
-                        $('tbody').html(res);
+                        $('#products').html(res);
                     });
                 })
 
@@ -90,8 +90,7 @@
                 $(document).on('click','.pagination',function(event){
                     console.log($(this).attr('href'));
                     $.get($(this).attr('href'),function(res){
-                        // console.log(res);
-                        $('tbody').html(res);
+                        $('#products').html(res);
                     })
                     event.preventDefault();
                 })
@@ -121,22 +120,7 @@
                         <li class="text-center"><a class="categories" href="/admin/all_products_categorized/dairy"><img src="../../assets/images/Dairy.png">Dairy</a></li>
                         <li class="text-center"><a class="categories" href="/admin/all_products_categorized/grains"><img src="../../assets/images/Grains.png">Grains</a></li>
                     </ol>
-                    <section id="products">
-                        <table>                     
-                            <thead> 
-                                <tr>
-                                    <th>Product</th>
-                                    <th>ID #</th>
-                                    <th>Price</th>
-                                    <th>Category</th>
-                                    <th>Inventory</th>
-                                    <th>Sold</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>                        
+                    <section id="products">                     
                     </section>
                 </div>
             </main>
@@ -162,7 +146,7 @@
                         <div class="row mb-3">
                             <div class="form-floating col-6">
                                 <select class="form-select" aria-label="Default select example" id="category" name="category">
-                                    <option selected>Vegetable</option>
+                                    <option value="Vegetables" selected>Vegetables</option>
                                     <option value="Fruits">Fruits</option>
                                     <option value="Meat">Meat</option>
                                     <option value="Dairy">Dairy</option>
@@ -186,6 +170,9 @@
                             <input id="img_create_upload" class="form-control" type="file" id="formFileMultiple" multiple name="images[]">
                         </div>
                         <div class="modal-footer">
+                            <label id="csrf">
+                                <input type="hidden" name="<?=$this->security->get_csrf_token_name();?>" value="<?=$this->security->get_csrf_hash();?>">
+                            </label>
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Add</button>                                
                         </div>

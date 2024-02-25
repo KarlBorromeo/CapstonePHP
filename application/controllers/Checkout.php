@@ -50,7 +50,7 @@ class Checkout extends CI_Controller{
                     "customer" => $customerId,
                     "description" => "Organic Stripe Test",
             ]);    
-            $this->product->add_order($this->session->userdata('form_order_payload'));
+            $this->product->add_order($this->session->userdata('form_order_payload'),$this->session->userdata('user')['id']);
             $this->session->unset_userdata('form_order_payload');
             redirect('/products');
         }
